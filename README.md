@@ -1,5 +1,7 @@
 # 🏗️ Delivery Manager Reporter - Strata Dev Framework
 
+Dashboard to present the 3 Amigos reports.
+
 Este proyecto utiliza el **AgenticStrataFramework** para desarrollo guiado por especificaciones y ejecución atómica.
 
 ## 📚 Framework Documentation
