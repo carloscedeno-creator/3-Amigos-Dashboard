@@ -1,0 +1,82 @@
+---
+description: GLOBAL STRATA LAWS - ALWAYS ACTIVE
+globs: *
+---
+# 🏗️ Strata Dev Framework Constitution
+
+YOU MUST FOLLOW THE ARCHITECTURE AND WORKFLOWS DEFINED IN `.AgenticStrataFramework/Core Technical Specification 61087d4cd5cd48d2a9a58048d24689d7.md`.
+
+## 🎯 Core Principles
+
+1. **Zero Hallucination:** You DO NOT write code without a Plan.
+2. **The Memory Rule:** Before editing ANY folder, you MUST read the `agents.md` file inside it (if it exists).
+3. **Atomic Execution:** Execute strictly one story from `stories.json` at a time.
+4. **Binary Verification:** You are done ONLY when the `acceptance_criteria` in `stories.json` are met.
+5. **Context Hygiene:** Do not load documentation files unless specifically required by the Plan.
+
+## 📋 Workflow Protocol (PPRE Cycle)
+
+### PRIME Phase
+- Load ONLY the current story from `docs/specs/stories.json`
+- Load relevant `docs/reference/` files ONLY when needed
+- Do NOT load the entire chat history
+
+### PLAN Phase
+- Generate a specific implementation plan in the chat
+- Plan must be reviewed and approved before execution
+
+### RESET Phase (The Kill Switch) ⚠️
+- **CRITICAL:** Clear the context window/chat history
+- This prevents "Context Rot"
+- Only the approved Plan and relevant files remain in context
+
+### EXECUTE Phase
+- Write code based strictly on the Plan and Story constraints
+- No improvisation or "creative interpretation"
+- Follow binary acceptance criteria exactly
+
+### VERIFY Phase
+- Check code against `acceptance_criteria`
+- Each criterion must evaluate to Pass or Fail
+- No partial passes allowed
+
+### COMMIT Phase
+- If all criteria pass: Set `"passes": true` in JSON
+- Log to `logs/progress.txt` with timestamp
+- Git commit with story ID in message
+- If any criterion fails: Update `agents.md` with lesson learned
+
+## 🛑 Forbidden Patterns
+
+- No `console.log` in production code
+- No class components (Function components only for React)
+- No direct CSS files (Use Tailwind CSS or styled-components)
+- No code without a corresponding story in `stories.json`
+- No skipping the RESET phase between PLAN and EXECUTE
+- No executing a new story or coding task after Plan without performing RESET; conversation/clarifications are allowed, but execution must wait until RESET is done
+- No git commit/push until the automated e2e suite has been executed and passes for the relevant changes
+- No e2e suite that ignores acceptance_criteria: e2e must evaluate the binary acceptance_criteria of the active story in `stories.json` (TDD mindset). Include negative/error-path checks that assert what must NOT happen.
+
+## 🧠 Memory System
+
+- **Short-Term Memory:** `logs/progress.txt` - Session-level continuity
+- **Long-Term Memory:** `src/**/agents.md` - Tacit knowledge and lessons learned
+- **Constitutional Memory:** `.cursor/rules/global.mdc` - Universal rules
+- **Reference Memory:** `docs/reference/*.md` - Loaded on-demand only
+
+## 🔄 System Evolution
+
+When a bug or failure occurs:
+1. Fix the code (Linear work)
+2. **MANDATORY:** Update the system memory:
+   - Logic error → Update `src/**/agents.md`
+   - Style error → Update `.cursor/rules/global.mdc`
+   - Process error → Update `docs/reference/workflow.md`
+
+If you fix a bug and do not update a `.md` file, you have **failed the protocol**.
+
+## 📚 Documentation Standards
+
+- PRD location: `docs/specs/prd.md` - Single source of truth
+- Stories location: `docs/specs/stories.json` - Executable atoms
+- Completed specs: `docs/done_specs/` - Archive location

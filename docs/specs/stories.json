@@ -1,0 +1,1043 @@
+{
+  "epic": "Delivery Manager Reporter - Implementación Completa",
+  "status": "active",
+  "prd_reference": "docs/specs/prd.md",
+  "stories": [
+    {
+      "id": "INIT-001",
+      "description": "Initialize Strata Dev Framework structure and verify setup",
+      "files_to_touch": [
+        ".cursor/rules/global.mdc",
+        "docs/specs/stories.json",
+        "logs/progress.txt"
+      ],
+      "acceptance_criteria": [
+        "All required directories exist (.cursor/rules, docs/specs, docs/reference, docs/done_specs, logs, scripts/sdd, src/components, src/api)",
+        "File '.cursor/rules/global.mdc' exists and contains Strata Constitution",
+        "File 'docs/specs/stories.json' exists with valid JSON structure",
+        "File 'logs/progress.txt' exists and is ready for logging"
+      ],
+      "passes": false
+    },
+    {
+      "id": "PRD-001",
+      "description": "Actualizar PRD para usar Jira Cloud for Sheets como fuente y documentar mapeo",
+      "files_to_touch": [
+        "docs/specs/prd.md",
+        "docs/specs/stories.json"
+      ],
+      "acceptance_criteria": [
+        "PRD describe Jira Cloud for Sheets como origen de datos y flujo de sync",
+        "Mapa de columnas del sheet a campos Supabase incluye Project/Project ID como squad, Actual start, Resolved, Story Points oficiales, Updated, info de sprint y aprobaciones",
+        "Limitaciones documentadas: sin columna Deleted ni Severity; burndown depende de fechas de sprint del sheet",
+        "Idempotencia definida usando Issue ID/Key + Updated como control de frescura"
+      ],
+      "passes": false
+    },
+    {
+      "id": "INFRA-001",
+      "description": "Initialize React project with Vite 5.1+ and configure basic setup",
+      "files_to_touch": [
+        "package.json",
+        "vite.config.js",
+        "index.html",
+        "src/main.jsx",
+        "src/App.jsx"
+      ],
+      "acceptance_criteria": [
+        "package.json exists with React 18.2+ and Vite 5.1+ dependencies",
+        "vite.config.js exists with React plugin configured",
+        "Project runs successfully with 'npm run dev'",
+        "Build command 'npm run build' produces dist folder",
+        "index.html exists and loads main.jsx"
+      ],
+      "passes": false
+    },
+    {
+      "id": "INFRA-002",
+      "description": "Configure TailwindCSS 3.x with PostCSS and custom theme colors",
+      "files_to_touch": [
+        "tailwind.config.js",
+        "postcss.config.js",
+        "src/index.css"
+      ],
+      "acceptance_criteria": [
+        "tailwind.config.js exists with content paths configured",
+        "Custom color palette defined (primary, success, warning, danger)",
+        "postcss.config.js exists with tailwindcss and autoprefixer",
+        "src/index.css imports Tailwind directives (@tailwind base, components, utilities)",
+        "TailwindCSS classes work in components (test with bg-primary-500)"
+      ],
+      "passes": false
+    },
+    {
+      "id": "INFRA-003",
+      "description": "Setup project folder structure and path aliases (@/ for src/)",
+      "files_to_touch": [
+        "vite.config.js",
+        "src/components/.gitkeep",
+        "src/services/.gitkeep",
+        "src/utils/.gitkeep",
+        "src/config/.gitkeep",
+        "src/hooks/.gitkeep"
+      ],
+      "acceptance_criteria": [
+        "All required folders exist (components, services, utils, config, hooks)",
+        "vite.config.js has path alias '@' resolving to './src'",
+        "Import '@/components/...' works in test file",
+        ".gitkeep files exist in empty directories"
+      ],
+      "passes": false
+    },
+    {
+      "id": "INFRA-004",
+      "description": "Configure environment variables and create .env.example",
+      "files_to_touch": [
+        ".env.example",
+        ".env.local",
+        ".gitignore"
+      ],
+      "acceptance_criteria": [
+        ".env.example exists with VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY placeholders",
+        ".env.local is in .gitignore",
+        "Environment variables load correctly in code (import.meta.env.VITE_SUPABASE_URL)",
+        ".env.example has comments explaining each variable"
+      ],
+      "passes": false
+    },
+    {
+      "id": "INFRA-005",
+      "description": "Setup ESLint and Prettier configuration",
+      "files_to_touch": [
+        ".eslintrc.cjs",
+        ".prettierrc",
+        ".prettierignore"
+      ],
+      "acceptance_criteria": [
+        ".eslintrc.cjs exists with React plugin configured",
+        ".prettierrc exists with formatting rules",
+        "ESLint runs without errors on existing code",
+        "Prettier formats code correctly"
+      ],
+      "passes": false
+    },
+    {
+      "id": "INFRA-006",
+      "description": "Create Supabase client singleton utility",
+      "files_to_touch": [
+        "src/utils/supabaseApi.js"
+      ],
+      "acceptance_criteria": [
+        "File src/utils/supabaseApi.js exists",
+        "Exports supabase client created with createClient",
+        "Throws error if environment variables are missing",
+        "Exports checkSupabaseConnection() function",
+        "Exports queryWithRetry() helper function",
+        "Client uses singleton pattern (single instance)"
+      ],
+      "passes": false
+    },
+    {
+      "id": "INFRA-007",
+      "description": "Create base Layout component with Sidebar and Navbar structure",
+      "files_to_touch": [
+        "src/components/layout/Layout.jsx",
+        "src/components/layout/Sidebar.jsx",
+        "src/components/layout/Navbar.jsx"
+      ],
+      "acceptance_criteria": [
+        "Layout.jsx exists and renders Sidebar and Navbar",
+        "Sidebar.jsx exists with navigation menu structure",
+        "Navbar.jsx exists with user info area",
+        "Layout component accepts children prop and renders them",
+        "Components use TailwindCSS for styling"
+      ],
+      "passes": false
+    },
+    {
+      "id": "INFRA-008",
+      "description": "Implement Sidebar navigation with module links and active state",
+      "files_to_touch": [
+        "src/components/layout/Sidebar.jsx",
+        "src/App.jsx"
+      ],
+      "acceptance_criteria": [
+        "Sidebar displays navigation items (Overall View, Delivery Metrics, Projects Metrics, etc.)",
+        "Active navigation item is visually highlighted",
+        "Clicking navigation item updates activeView state",
+        "Sidebar is collapsible on mobile screens",
+        "Uses Lucide React icons for navigation items"
+      ],
+      "passes": false
+    },
+    {
+      "id": "INFRA-009",
+      "description": "Implement responsive Sidebar with mobile overlay",
+      "files_to_touch": [
+        "src/components/layout/Sidebar.jsx",
+        "src/components/layout/Layout.jsx"
+      ],
+      "acceptance_criteria": [
+        "Sidebar hides on screens smaller than md breakpoint",
+        "Hamburger menu button appears on mobile",
+        "Clicking hamburger opens sidebar with overlay",
+        "Overlay closes sidebar when clicked",
+        "Sidebar slides in/out with smooth transition"
+      ],
+      "passes": false
+    },
+    {
+      "id": "AUTH-001",
+      "description": "Create authentication service with login, logout, and session management",
+      "files_to_touch": [
+        "src/utils/authService.js"
+      ],
+      "acceptance_criteria": [
+        "File src/utils/authService.js exists",
+        "Exports login(email, password) function using Supabase Auth",
+        "Exports logout() function that clears session",
+        "Exports getCurrentUser() function returning user object",
+        "Exports isAuthenticated() function returning boolean",
+        "Exports resetPassword(email) function",
+        "All functions handle errors and return consistent format"
+      ],
+      "passes": false
+    },
+    {
+      "id": "AUTH-002",
+      "description": "Create Login component with form validation",
+      "files_to_touch": [
+        "src/components/auth/Login.jsx"
+      ],
+      "acceptance_criteria": [
+        "Login.jsx exists with email and password input fields",
+        "Form validates email format",
+        "Form validates password minimum length (6 characters)",
+        "Shows loading state during authentication",
+        "Displays error messages for invalid credentials",
+        "Calls authService.login() on form submit"
+      ],
+      "passes": false
+    },
+    {
+      "id": "AUTH-003",
+      "description": "Implement session persistence and auto-redirect for unauthenticated users",
+      "files_to_touch": [
+        "src/App.jsx",
+        "src/utils/authService.js"
+      ],
+      "acceptance_criteria": [
+        "App checks authentication status on mount",
+        "Unauthenticated users are redirected to login page",
+        "Session persists after page reload",
+        "Token refresh happens automatically",
+        "Loading state shown during auth check"
+      ],
+      "passes": false
+    },
+    {
+      "id": "AUTH-004",
+      "description": "Create ForgotPassword component for password recovery",
+      "files_to_touch": [
+        "src/components/auth/ForgotPassword.jsx"
+      ],
+      "acceptance_criteria": [
+        "ForgotPassword.jsx exists with email input",
+        "Form validates email format",
+        "Calls authService.resetPassword() on submit",
+        "Shows success message after email sent",
+        "Shows error message if email not found",
+        "Has link back to login page"
+      ],
+      "passes": false
+    },
+    {
+      "id": "AUTH-005",
+      "description": "Create permissions configuration file with role-based access control",
+      "files_to_touch": [
+        "src/config/permissions.js"
+      ],
+      "acceptance_criteria": [
+        "File src/config/permissions.js exists",
+        "Defines ROLE_PERMISSIONS object mapping roles to modules",
+        "Roles include: admin, pm, engineering_manager, developer, stakeholder, three_amigos",
+        "Exports canAccess(role, module) function",
+        "Exports getAccessibleModules(role) function",
+        "Permissions follow PRD module structure"
+      ],
+      "passes": false
+    },
+    {
+      "id": "AUTH-006",
+      "description": "Implement route protection based on user roles",
+      "files_to_touch": [
+        "src/components/common/ProtectedRoute.jsx",
+        "src/App.jsx"
+      ],
+      "acceptance_criteria": [
+        "ProtectedRoute.jsx component exists",
+        "Checks user role against module permissions",
+        "Renders children if user has access",
+        "Shows 'Access Denied' message if no permission",
+        "Integrates with permissions.js config"
+      ],
+      "passes": false
+    },
+    {
+      "id": "AUTH-007",
+      "description": "Update Navbar to display current user info and logout button",
+      "files_to_touch": [
+        "src/components/layout/Navbar.jsx"
+      ],
+      "acceptance_criteria": [
+        "Navbar displays current user's email/name",
+        "Logout button exists and calls authService.logout()",
+        "User avatar displayed if available",
+        "Dropdown menu for user actions (optional)",
+        "Logout redirects to login page"
+      ],
+      "passes": false
+    },
+    {
+      "id": "SYNC-001",
+      "description": "Setup Node.js sync service project structure",
+      "files_to_touch": [
+        "jira-supabase-sync/package.json",
+        "jira-supabase-sync/src/index.js",
+        "jira-supabase-sync/src/config.js"
+      ],
+      "acceptance_criteria": [
+        "Directory jira-supabase-sync/ exists",
+        "package.json exists with node-fetch or axios dependency",
+        "src/index.js exists as entry point",
+        "src/config.js exists for configuration"
+      ],
+      "passes": false
+    },
+    {
+      "id": "SYNC-002",
+      "description": "Create Jira client with retry and rate limiting handling",
+      "files_to_touch": [
+        "jira-supabase-sync/src/clients/jira-client.js",
+        "jira-supabase-sync/src/utils/retry-helper.js"
+      ],
+      "acceptance_criteria": [
+        "File jira-client.js exists with JiraClient class",
+        "Implements request() method with retry logic",
+        "Handles 429 rate limiting with Retry-After header",
+        "Uses exponential backoff for retries",
+        "retry-helper.js exports retryWithExponentialBackoff function"
+      ],
+      "passes": false
+    },
+    {
+      "id": "SYNC-003",
+      "description": "Create Supabase client for sync service",
+      "files_to_touch": [
+        "jira-supabase-sync/src/clients/supabase-client.js"
+      ],
+      "acceptance_criteria": [
+        "File supabase-client.js exists",
+        "Exports supabase client instance",
+        "Uses service role key for admin operations",
+        "Implements upsert operations",
+        "Handles transaction errors"
+      ],
+      "passes": false
+    },
+    {
+      "id": "SYNC-004",
+      "description": "Create sprint processor to sync sprints from Jira",
+      "files_to_touch": [
+        "jira-supabase-sync/src/processors/sprint-processor.js"
+      ],
+      "acceptance_criteria": [
+        "File sprint-processor.js exists",
+        "Exports processSprint() function",
+        "Fetches sprints from Jira API",
+        "Upserts sprints to Supabase squads table",
+        "Handles pagination for multiple sprints"
+      ],
+      "passes": false
+    },
+    {
+      "id": "SYNC-005",
+      "description": "Create issue processor to sync issues from Jira",
+      "files_to_touch": [
+        "jira-supabase-sync/src/processors/issue-processor.js"
+      ],
+      "acceptance_criteria": [
+        "File issue-processor.js exists",
+        "Exports processIssue() function",
+        "Fetches issues from Jira API",
+        "Upserts issues to Supabase issues table",
+        "Processes issue history and status changes"
+      ],
+      "passes": false
+    },
+    {
+      "id": "SYNC-006",
+      "description": "Create scope change detector for sprint scope tracking",
+      "files_to_touch": [
+        "jira-supabase-sync/src/processors/scope-change-detector.js"
+      ],
+      "acceptance_criteria": [
+        "File scope-change-detector.js exists",
+        "Exports detectScopeChanges() function",
+        "Compares current issues with previous snapshot",
+        "Detects added, removed, and SP changed issues",
+        "Saves changes to sprint_scope_changes table"
+      ],
+      "passes": false
+    },
+    {
+      "id": "SYNC-007",
+      "description": "Create incremental sync function (runs every 30 minutes)",
+      "files_to_touch": [
+        "jira-supabase-sync/src/sync/sync.js"
+      ],
+      "acceptance_criteria": [
+        "File sync.js exists",
+        "Exports incrementalSync() function",
+        "Reads last sync date from config",
+        "Only syncs changes since last sync",
+        "Updates last sync date after completion"
+      ],
+      "passes": false
+    },
+    {
+      "id": "SYNC-008",
+      "description": "Create full sync function (runs daily)",
+      "files_to_touch": [
+        "jira-supabase-sync/src/sync/sync.js"
+      ],
+      "acceptance_criteria": [
+        "fullSync() function exists",
+        "Syncs all sprints and issues",
+        "Processes complete history",
+        "Recalculates all metrics",
+        "Refreshes materialized views"
+      ],
+      "passes": false
+    },
+    {
+      "id": "SYNC-009",
+      "description": "Configure cron jobs for automatic sync (Vercel or GitHub Actions)",
+      "files_to_touch": [
+        "vercel.json",
+        ".github/workflows/sync-jira.yml"
+      ],
+      "acceptance_criteria": [
+        "vercel.json exists with cron configuration",
+        "Cron runs incremental sync every 30 minutes",
+        "Cron runs full sync daily at 3 AM",
+        "GitHub Actions workflow exists as alternative",
+        "Environment variables configured"
+      ],
+      "passes": false
+    },
+    {
+      "id": "OVERALL-001",
+      "description": "Create reusable KPICard component",
+      "files_to_touch": [
+        "src/components/common/KPICard.jsx"
+      ],
+      "acceptance_criteria": [
+        "KPICard.jsx exists",
+        "Accepts title, value, label, trend, color, icon props",
+        "Displays value with label",
+        "Shows trend indicator (up/down/neutral)",
+        "Shows tooltip on hover",
+        "Uses TailwindCSS for styling"
+      ],
+      "passes": false
+    },
+    {
+      "id": "OVERALL-002",
+      "description": "Create overallViewService with Delivery Success Score function",
+      "files_to_touch": [
+        "src/services/overallViewService.js"
+      ],
+      "acceptance_criteria": [
+        "File overallViewService.js exists",
+        "Exports getDeliverySuccessScore() function",
+        "Calculates average score across all squads",
+        "Uses cache service for performance",
+        "Returns score from 0 to 100"
+      ],
+      "passes": false
+    },
+    {
+      "id": "OVERALL-003",
+      "description": "Add Quality Score and Team Health Score functions to overallViewService",
+      "files_to_touch": [
+        "src/services/overallViewService.js"
+      ],
+      "acceptance_criteria": [
+        "getQualityScore() function exists",
+        "getTeamHealthScore() function exists",
+        "getAverageVelocity() function exists",
+        "All functions use cache",
+        "All functions return numbers 0-100"
+      ],
+      "passes": false
+    },
+    {
+      "id": "OVERALL-004",
+      "description": "Create OverallView component with 4 main KPI cards",
+      "files_to_touch": [
+        "src/components/overall/OverallView.jsx"
+      ],
+      "acceptance_criteria": [
+        "OverallView.jsx exists",
+        "Displays 4 KPICard components",
+        "Shows Delivery Success Score",
+        "Shows Quality Score",
+        "Shows Team Health Score",
+        "Shows Average Velocity",
+        "Shows loading state during fetch"
+      ],
+      "passes": false
+    },
+    {
+      "id": "OVERALL-005",
+      "description": "Create ActiveSprintsSummary component",
+      "files_to_touch": [
+        "src/components/overall/ActiveSprintsSummary.jsx"
+      ],
+      "acceptance_criteria": [
+        "ActiveSprintsSummary.jsx exists",
+        "Lists all active sprints",
+        "Shows progress (SP Done / SP Goal)",
+        "Shows days remaining",
+        "Highlights sprints at risk (< 70% progress)",
+        "Filters by squad (optional)"
+      ],
+      "passes": false
+    },
+    {
+      "id": "OVERALL-006",
+      "description": "Create UnifiedTimeline component with Gantt chart",
+      "files_to_touch": [
+        "src/components/overall/UnifiedTimeline.jsx",
+        "src/components/common/GanttChart.jsx"
+      ],
+      "acceptance_criteria": [
+        "UnifiedTimeline.jsx exists",
+        "GanttChart.jsx exists",
+        "Shows initiatives and sprints",
+        "Displays today line",
+        "Supports horizontal scroll",
+        "Shows tooltips on hover"
+      ],
+      "passes": false
+    },
+    {
+      "id": "OVERALL-007",
+      "description": "Create QuickAlerts component",
+      "files_to_touch": [
+        "src/components/overall/QuickAlerts.jsx"
+      ],
+      "acceptance_criteria": [
+        "QuickAlerts.jsx exists",
+        "Shows sprints with low velocity",
+        "Shows blocked issues",
+        "Shows sprints closing soon",
+        "Displays alert count badge",
+        "Links to relevant modules"
+      ],
+      "passes": false
+    },
+    {
+      "id": "DELIVERY-001",
+      "description": "Create deliveryKPIService with Delivery Score calculation",
+      "files_to_touch": [
+        "src/services/deliveryKPIService.js"
+      ],
+      "acceptance_criteria": [
+        "File deliveryKPIService.js exists",
+        "Exports getDeliveryScore() function",
+        "Exports getVelocity() function",
+        "Exports getCycleTime() function",
+        "Exports getThroughput() function",
+        "All functions accept squadId, sprintId, dateRange filters"
+      ],
+      "passes": false
+    },
+    {
+      "id": "DELIVERY-002",
+      "description": "Create DeliveryKPIs component with charts",
+      "files_to_touch": [
+        "src/components/delivery/DeliveryKPIs.jsx",
+        "src/components/delivery/DeliveryScoreChart.jsx"
+      ],
+      "acceptance_criteria": [
+        "DeliveryKPIs.jsx exists",
+        "DeliveryScoreChart.jsx exists",
+        "Shows Delivery Success Score",
+        "Displays breakdown components",
+        "Shows historical trend chart",
+        "Has filters for squad, sprint, date range"
+      ],
+      "passes": false
+    },
+    {
+      "id": "DELIVERY-003",
+      "description": "Create QualityKPIs component with Rework and Defect Rate",
+      "files_to_touch": [
+        "src/components/delivery/QualityKPIs.jsx"
+      ],
+      "acceptance_criteria": [
+        "QualityKPIs.jsx exists",
+        "Shows Rework Rate",
+        "Shows Defect Rate",
+        "Displays historical charts",
+        "Compares with benchmarks",
+        "Has filters"
+      ],
+      "passes": false
+    },
+    {
+      "id": "DELIVERY-004",
+      "description": "Create TeamHealthKPIs component",
+      "files_to_touch": [
+        "src/components/delivery/TeamHealthKPIs.jsx"
+      ],
+      "acceptance_criteria": [
+        "TeamHealthKPIs.jsx exists",
+        "Shows Team Health Score",
+        "Displays capacity utilization",
+        "Shows load balance",
+        "Integrates with ENPS data",
+        "Shows trend charts"
+      ],
+      "passes": false
+    },
+    {
+      "id": "PROJECTS-001",
+      "description": "Create projectMetricsApi service",
+      "files_to_touch": [
+        "src/services/projectMetricsApi.js"
+      ],
+      "acceptance_criteria": [
+        "File projectMetricsApi.js exists",
+        "Exports getSquads() function",
+        "Exports getSprintsBySquad() function",
+        "Exports getSprintMetrics() function",
+        "Exports getSprintIssues() function",
+        "Exports getScopeChanges() function"
+      ],
+      "passes": false
+    },
+    {
+      "id": "PROJECTS-002",
+      "description": "Create ProjectsMetrics component with squad and sprint selectors",
+      "files_to_touch": [
+        "src/components/projects/ProjectsMetrics.jsx"
+      ],
+      "acceptance_criteria": [
+        "ProjectsMetrics.jsx exists",
+        "Has squad dropdown selector",
+        "Has sprint dropdown (filtered by squad)",
+        "Displays SP Goal vs SP Done",
+        "Shows velocity",
+        "Shows scope changes if applicable"
+      ],
+      "passes": false
+    },
+    {
+      "id": "PROJECTS-003",
+      "description": "Create BoardStateBreakdown component with pie chart",
+      "files_to_touch": [
+        "src/components/projects/BoardStateBreakdown.jsx"
+      ],
+      "acceptance_criteria": [
+        "BoardStateBreakdown.jsx exists",
+        "Uses Recharts PieChart",
+        "Groups issues by status (Done, In Progress, To Do, Blocked)",
+        "Shows percentages",
+        "Displays tooltips with counts",
+        "Uses statusHelper for Done determination"
+      ],
+      "passes": false
+    },
+    {
+      "id": "PROJECTS-004",
+      "description": "Create ScopeChangesList component",
+      "files_to_touch": [
+        "src/components/projects/ScopeChangesList.jsx"
+      ],
+      "acceptance_criteria": [
+        "ScopeChangesList.jsx exists",
+        "Lists added issues",
+        "Lists removed issues",
+        "Lists SP changes",
+        "Shows change dates",
+        "Calculates total impact"
+      ],
+      "passes": false
+    },
+    {
+      "id": "PROJECTS-005",
+      "description": "Create PDF generator utility using jsPDF and html2canvas",
+      "files_to_touch": [
+        "src/utils/pdfGenerator.js"
+      ],
+      "acceptance_criteria": [
+        "File pdfGenerator.js exists",
+        "Exports generateSprintPDF() function",
+        "Converts React components to images",
+        "Creates PDF with sprint info",
+        "Includes metrics and charts",
+        "Includes issues table",
+        "Triggers download"
+      ],
+      "passes": false
+    },
+    {
+      "id": "DEV-001",
+      "description": "Create developerMetricsApi service",
+      "files_to_touch": [
+        "src/services/developerMetricsApi.js"
+      ],
+      "acceptance_criteria": [
+        "File developerMetricsApi.js exists",
+        "Exports getDevelopersBySquad() function",
+        "Exports getDeveloperMetrics() function",
+        "Exports getDeveloperIssues() function",
+        "Queries v_developer_sprint_metrics_complete view"
+      ],
+      "passes": false
+    },
+    {
+      "id": "DEV-002",
+      "description": "Create DeveloperMetrics component",
+      "files_to_touch": [
+        "src/components/developer/DeveloperMetrics.jsx"
+      ],
+      "acceptance_criteria": [
+        "DeveloperMetrics.jsx exists",
+        "Has squad, sprint, developer selectors",
+        "Shows Dev Done Rate",
+        "Shows SP completed",
+        "Shows issues completed",
+        "Shows average cycle time",
+        "Displays charts and tables"
+      ],
+      "passes": false
+    },
+    {
+      "id": "DEV-003",
+      "description": "Create DeveloperBurndown component",
+      "files_to_touch": [
+        "src/components/developer/DeveloperBurndown.jsx"
+      ],
+      "acceptance_criteria": [
+        "DeveloperBurndown.jsx exists",
+        "Shows SP completed vs time line",
+        "Shows SP goal (ideal) line",
+        "Uses Recharts LineChart",
+        "Has filters",
+        "Shows historical data"
+      ],
+      "passes": false
+    },
+    {
+      "id": "DEV-004",
+      "description": "Create DeveloperWorkload component",
+      "files_to_touch": [
+        "src/components/developer/DeveloperWorkload.jsx"
+      ],
+      "acceptance_criteria": [
+        "DeveloperWorkload.jsx exists",
+        "Shows SP distribution by developer",
+        "Compares load between developers",
+        "Shows alerts for overload",
+        "Uses bar chart"
+      ],
+      "passes": false
+    },
+    {
+      "id": "CAPACITY-001",
+      "description": "Create teamCapacityService",
+      "files_to_touch": [
+        "src/services/teamCapacityService.js"
+      ],
+      "acceptance_criteria": [
+        "File teamCapacityService.js exists",
+        "Exports getSquadSprintCapacity() function",
+        "Exports saveCapacity() function",
+        "Exports getDeveloperAssignments() function",
+        "Validates permissions before save"
+      ],
+      "passes": false
+    },
+    {
+      "id": "CAPACITY-002",
+      "description": "Create TeamCapacity component with configuration form",
+      "files_to_touch": [
+        "src/components/capacity/TeamCapacity.jsx"
+      ],
+      "acceptance_criteria": [
+        "TeamCapacity.jsx exists",
+        "Has squad and sprint selectors",
+        "Shows SP Goal input",
+        "Shows SP Available input",
+        "Lists developers with participation toggle",
+        "Shows SP capacity per developer",
+        "Saves configuration",
+        "Checks permissions (PM, admin, 3amigos only)"
+      ],
+      "passes": false
+    },
+    {
+      "id": "CAPACITY-003",
+      "description": "Create CapacityVisualization component",
+      "files_to_touch": [
+        "src/components/capacity/CapacityVisualization.jsx"
+      ],
+      "acceptance_criteria": [
+        "CapacityVisualization.jsx exists",
+        "Shows capacity vs utilization chart",
+        "Displays allocation by developer",
+        "Shows overload alerts",
+        "Uses visual indicators"
+      ],
+      "passes": false
+    },
+    {
+      "id": "CAPACITY-004",
+      "description": "Create TeamAllocationView component",
+      "files_to_touch": [
+        "src/components/capacity/TeamAllocationView.jsx"
+      ],
+      "acceptance_criteria": [
+        "TeamAllocationView.jsx exists",
+        "Shows allocation across sprints",
+        "Displays capacity trends",
+        "Shows team availability"
+      ],
+      "passes": false
+    },
+    {
+      "id": "PRODUCT-001",
+      "description": "Create ProductRoadmapView component",
+      "files_to_touch": [
+        "src/components/product/ProductRoadmapView.jsx"
+      ],
+      "acceptance_criteria": [
+        "ProductRoadmapView.jsx exists",
+        "Shows Gantt chart of initiatives",
+        "Has filters (team, quarter, status)",
+        "Displays KPIs (Total Initiatives, Total Effort, Completion %)",
+        "Shows initiatives table",
+        "Shows bugs & releases table"
+      ],
+      "passes": false
+    },
+    {
+      "id": "PRODUCT-002",
+      "description": "Create data source integration for Product Roadmap (Google Sheets or Supabase)",
+      "files_to_touch": [
+        "src/utils/csvParser.js",
+        "src/config/dataSources.js"
+      ],
+      "acceptance_criteria": [
+        "csvParser.js exists for parsing CSV",
+        "dataSources.js exists with configuration",
+        "Supports Google Sheets CSV export",
+        "Supports Supabase initiatives table",
+        "Has fallback to mock data",
+        "DataSourceSelector component exists"
+      ],
+      "passes": false
+    },
+    {
+      "id": "DELROAD-001",
+      "description": "Create DeliveryRoadmapView component",
+      "files_to_touch": [
+        "src/components/delivery-roadmap/DeliveryRoadmapView.jsx"
+      ],
+      "acceptance_criteria": [
+        "DeliveryRoadmapView.jsx exists",
+        "Shows delivery projects timeline",
+        "Displays delivery metrics",
+        "Integrates with Jira data"
+      ],
+      "passes": false
+    },
+    {
+      "id": "KPIS-001",
+      "description": "Create KPIsView consolidated component",
+      "files_to_touch": [
+        "src/components/kpis/KPIsView.jsx"
+      ],
+      "acceptance_criteria": [
+        "KPIsView.jsx exists",
+        "Integrates DeliveryKPIs component",
+        "Integrates QualityKPIs component",
+        "Integrates ProductDepartmentKPIs component",
+        "Has tab navigation",
+        "Has global filters"
+      ],
+      "passes": false
+    },
+    {
+      "id": "KPIS-002",
+      "description": "Create SoftwareEngineeringBenchmarks component",
+      "files_to_touch": [
+        "src/components/kpis/SoftwareEngineeringBenchmarks.jsx"
+      ],
+      "acceptance_criteria": [
+        "SoftwareEngineeringBenchmarks.jsx exists",
+        "Compares Velocity with benchmarks",
+        "Compares Cycle Time with benchmarks",
+        "Compares Rework Rate with benchmarks",
+        "Compares Defect Rate with benchmarks",
+        "Shows gap visualization"
+      ],
+      "passes": false
+    },
+    {
+      "id": "ENPS-001",
+      "description": "Create enpsSurveyService",
+      "files_to_touch": [
+        "src/services/enpsSurveyService.js"
+      ],
+      "acceptance_criteria": [
+        "File enpsSurveyService.js exists",
+        "Exports getActiveSurvey() function",
+        "Exports getSurveyQuestions() function",
+        "Exports submitSurveyResponse() function",
+        "Exports getUserResponse() function",
+        "Prevents duplicate responses (one per day)"
+      ],
+      "passes": false
+    },
+    {
+      "id": "ENPS-002",
+      "description": "Create ENPSSurvey component for developers",
+      "files_to_touch": [
+        "src/components/enps/ENPSSurvey.jsx"
+      ],
+      "acceptance_criteria": [
+        "ENPSSurvey.jsx exists",
+        "Loads active survey automatically",
+        "Shows questions organized by categories",
+        "Has squad selector",
+        "Handles boolean and text questions",
+        "Prevents duplicate submissions",
+        "Shows last response if already submitted"
+      ],
+      "passes": false
+    },
+    {
+      "id": "ENPS-003",
+      "description": "Create ENPSSurveyManagement component for admins",
+      "files_to_touch": [
+        "src/components/enps/ENPSSurveyManagement.jsx"
+      ],
+      "acceptance_criteria": [
+        "ENPSSurveyManagement.jsx exists",
+        "Lists all surveys (active and historical)",
+        "Allows creating new survey",
+        "Allows editing survey",
+        "Manages questions (add, edit, delete, reorder)",
+        "Activates/deactivates surveys",
+        "Shows results with charts"
+      ],
+      "passes": false
+    },
+    {
+      "id": "ADMIN-001",
+      "description": "Create UserAdministration component",
+      "files_to_touch": [
+        "src/components/admin/UserAdministration.jsx"
+      ],
+      "acceptance_criteria": [
+        "UserAdministration.jsx exists",
+        "Lists all application users",
+        "Shows email, role, status, creation date",
+        "Allows editing roles (admin only)",
+        "Has search/filter functionality",
+        "Falls back to auth.users if app_users unavailable"
+      ],
+      "passes": false
+    },
+    {
+      "id": "ADMIN-002",
+      "description": "Create RoleAccess component for permission management",
+      "files_to_touch": [
+        "src/components/admin/RoleAccess.jsx"
+      ],
+      "acceptance_criteria": [
+        "RoleAccess.jsx exists",
+        "Shows permissions by role",
+        "Allows editing permissions",
+        "Saves to role_permission_config table",
+        "Has reset to defaults option"
+      ],
+      "passes": false
+    },
+    {
+      "id": "REPORT-001",
+      "description": "Enhance PDF generator for multiple report types",
+      "files_to_touch": [
+        "src/utils/pdfGenerator.js"
+      ],
+      "acceptance_criteria": [
+        "generateProjectsMetricsPDF() function exists",
+        "generateDeveloperMetricsPDF() function exists",
+        "generateOverallViewPDF() function exists",
+        "All functions include charts",
+        "All functions have professional design"
+      ],
+      "passes": false
+    },
+    {
+      "id": "REPORT-002",
+      "description": "Create CSV export utility",
+      "files_to_touch": [
+        "src/utils/csvExporter.js"
+      ],
+      "acceptance_criteria": [
+        "File csvExporter.js exists",
+        "Exports exportTableToCSV() function",
+        "Exports exportMetricsToCSV() function",
+        "Generates properly formatted CSV",
+        "Triggers download"
+      ],
+      "passes": false
+    },
+    {
+      "id": "UTILS-001",
+      "description": "Create cacheService for performance optimization",
+      "files_to_touch": [
+        "src/services/cacheService.js"
+      ],
+      "acceptance_criteria": [
+        "File cacheService.js exists",
+        "Exports get() and set() functions",
+        "Implements TTL (time to live)",
+        "Defines CACHE_TTL constants",
+        "Clears expired entries"
+      ],
+      "passes": false
+    },
+    {
+      "id": "UTILS-002",
+      "description": "Create statusHelper utility for status determination",
+      "files_to_touch": [
+        "src/utils/statusHelper.js"
+      ],
+      "acceptance_criteria": [
+        "File statusHelper.js exists",
+        "Exports isStatusCompleted() function",
+        "Queries status_definitions table",
+        "Handles dev_done flag",
+        "Returns boolean"
+      ],
+      "passes": false
+    }
+  ]
+}
