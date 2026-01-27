@@ -3,3 +3,5 @@
 [2026-01-26 08:55] PRD LOADED: docs/REQUERIMIENTOS_COMPLETOS_PRD.md copied to docs/specs/prd.md
 [2026-01-26 08:55] STORIES CREATED: Initial stories.json with Fase 1 (Infraestructura Base + Autenticación) - 17 stories total
 [2026-01-26 09:15] FRAMEWORK COMPLETED: All stories added for all 7 phases - Total: 60+ stories covering all 14 modules
+[2026-01-26 17:58] INFRA-001 PASSED: Vite React scaffold added, deps installed, build succeeded
+[2026-01-26 18:25] INFRA-002 PASSED: Tailwind 3 + PostCSS configured; custom palette working in App.jsx

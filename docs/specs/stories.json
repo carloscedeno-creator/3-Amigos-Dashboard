@@ -68,7 +68,7 @@
         "src/index.css imports Tailwind directives (@tailwind base, components, utilities)",
         "TailwindCSS classes work in components (test with bg-primary-500)"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-003",
@@ -87,7 +87,7 @@
         "Import '@/components/...' works in test file",
         ".gitkeep files exist in empty directories"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-004",

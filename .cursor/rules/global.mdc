@@ -57,6 +57,15 @@ YOU MUST FOLLOW THE ARCHITECTURE AND WORKFLOWS DEFINED IN `.AgenticStrataFramewo
 - No git commit/push until the automated e2e suite has been executed and passes for the relevant changes
 - No e2e suite that ignores acceptance_criteria: e2e must evaluate the binary acceptance_criteria of the active story in `stories.json` (TDD mindset). Include negative/error-path checks that assert what must NOT happen.
 
+## 🚦 Execution Guardrails (must verbalize before coding)
+- Identify the active story ID and restate its acceptance criteria.
+- Confirm user approval to execute, then perform RESET explicitly.
+- Load only the files needed for that story; avoid unrelated docs.
+- State the validation you will run (e.g., build/tests) before finishing.
+- Do not start another story or edit unrelated files without a fresh PLAN+RESET.
+- If a process error occurs, update `docs/reference/workflow.md` with the lesson.
+- Scope guardrail: limit all file ops to `C:\Users\carlo\OneDrive\Documents\Delivery Manager Reporter` unless the user explicitly asks otherwise.
+
 ## 🧠 Memory System
 
 - **Short-Term Memory:** `logs/progress.txt` - Session-level continuity
