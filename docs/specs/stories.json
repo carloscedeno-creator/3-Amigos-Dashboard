@@ -17,7 +17,7 @@
         "File 'docs/specs/stories.json' exists with valid JSON structure",
         "File 'logs/progress.txt' exists and is ready for logging"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "PRD-001",
@@ -32,7 +32,7 @@
         "Limitaciones documentadas: sin columna Deleted ni Severity; burndown depende de fechas de sprint del sheet",
         "Idempotencia definida usando Issue ID/Key + Updated como control de frescura"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-001",
@@ -68,7 +68,7 @@
         "src/index.css imports Tailwind directives (@tailwind base, components, utilities)",
         "TailwindCSS classes work in components (test with bg-primary-500)"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-003",
@@ -87,7 +87,7 @@
         "Import '@/components/...' works in test file",
         ".gitkeep files exist in empty directories"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-004",
@@ -103,7 +103,7 @@
         "Environment variables load correctly in code (import.meta.env.VITE_SUPABASE_URL)",
         ".env.example has comments explaining each variable"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-005",
@@ -119,7 +119,7 @@
         "ESLint runs without errors on existing code",
         "Prettier formats code correctly"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-006",
@@ -135,7 +135,7 @@
         "Exports queryWithRetry() helper function",
         "Client uses singleton pattern (single instance)"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-007",
@@ -152,7 +152,7 @@
         "Layout component accepts children prop and renders them",
         "Components use TailwindCSS for styling"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-008",
@@ -168,7 +168,7 @@
         "Sidebar is collapsible on mobile screens",
         "Uses Lucide React icons for navigation items"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-009",
@@ -184,7 +184,7 @@
         "Overlay closes sidebar when clicked",
         "Sidebar slides in/out with smooth transition"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "AUTH-001",
@@ -201,7 +201,7 @@
         "Exports resetPassword(email) function",
         "All functions handle errors and return consistent format"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "AUTH-002",
@@ -212,12 +212,13 @@
       "acceptance_criteria": [
         "Login.jsx exists with email and password input fields",
         "Form validates email format",
-        "Form validates password minimum length (6 characters)",
+        "Form validates password policy (min 8 chars, upper, lower, number, special)",
+        "Signup flow includes confirm password and matches before submit",
         "Shows loading state during authentication",
         "Displays error messages for invalid credentials",
         "Calls authService.login() on form submit"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "AUTH-003",
@@ -233,7 +234,7 @@
         "Token refresh happens automatically",
         "Loading state shown during auth check"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "AUTH-004",
@@ -249,7 +250,7 @@
         "Shows error message if email not found",
         "Has link back to login page"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "AUTH-005",
@@ -265,7 +266,7 @@
         "Exports getAccessibleModules(role) function",
         "Permissions follow PRD module structure"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "AUTH-006",
@@ -281,7 +282,7 @@
         "Shows 'Access Denied' message if no permission",
         "Integrates with permissions.js config"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "AUTH-007",
@@ -296,7 +297,7 @@
         "Dropdown menu for user actions (optional)",
         "Logout redirects to login page"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "SYNC-001",

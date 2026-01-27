@@ -3,3 +3,24 @@
 [2026-01-26 08:55] PRD LOADED: docs/REQUERIMIENTOS_COMPLETOS_PRD.md copied to docs/specs/prd.md
 [2026-01-26 08:55] STORIES CREATED: Initial stories.json with Fase 1 (Infraestructura Base + Autenticación) - 17 stories total
 [2026-01-26 09:15] FRAMEWORK COMPLETED: All stories added for all 7 phases - Total: 60+ stories covering all 14 modules
+[2026-01-26 17:58] INFRA-001 PASSED: Vite React scaffold added, deps installed, build succeeded
+[2026-01-26 18:25] INFRA-002 PASSED: Tailwind 3 + PostCSS configured; custom palette working in App.jsx
+[2026-01-26 19:05] INFRA-003 PASSED: Path alias '@' added, base folders creados (.gitkeep), build ok.
+[2026-01-26 19:20] INFRA-004 PASSED: .env.example added with comments, .env.local ignorado, env helper usa import.meta.env, build ok.
+[2026-01-26 19:40] INFRA-005 PASSED: ESLint + Prettier config añadidos; lint ok; prettier check pasa.
+[2026-01-26 19:55] INFRA-006 PASSED: supabaseApi singleton creado (createClient), checkSupabaseConnection y queryWithRetry listos; build y lint ok.
+[2026-01-26 20:15] INFRA-007 PASSED: Layout/Sidebar/Navbar creados, children renderizados, Tailwind aplicado; lint y build ok.
+[2026-01-26 20:35] INFRA-008 PASSED: Sidebar con links e íconos Lucide, estado activo y colapsable en mobile; App actualizada; lint/build ok.
+[2026-01-26 20:50] INFRA-009 PASSED: Sidebar responsive con overlay y slide-in/out; botón hamburguesa móvil abre/cierra; lint/build ok.
+[2026-01-27 11:05] AUTH-001..007 COMPLETED: English auth flows, strong password + confirm, role-based nav/logout; PRD+stories updated; commit aafca75 pushed.
+[2026-01-27 12:30] PRD-001 PASSED: PRD actualizado con flujo Jira Cloud for Sheets, mapeo columnas→Supabase, limitaciones y estrategia de idempotencia documentadas.
+[2026-01-27 12:55] INIT-001 PASSED: Estructura Strata verificada (dirs clave, Constitución en .cursor/rules/global.mdc, stories.json válido, logs/progress.txt listo).
+[2026-01-27 13:05] AUTH-001 PASSED: authService con login/logout/getCurrentUser/isAuthenticated/resetPassword y manejo de errores consistente.
+[2026-01-27 13:25] AUTH-002 PASSED: Login.jsx con validación de email, password fuerte, confirmación en signup, loading y mensajes de error; usa authService.login/signUp.
+[2026-01-27 13:40] AUTH-003 PASSED: App verifica sesión en mount, muestra loading, redirige a login si no hay sesión y mantiene sesión tras reload (Supabase getSession + onAuthStateChange).
+[2026-01-27 13:55] AUTH-004 PASSED: ForgotPassword.jsx valida email, llama resetPassword, muestra éxito/error y link de regreso a login.
+[2026-01-27 14:05] AUTH-005 PASSED: permissions.js define ROLE_PERMISSIONS (admin, pm, engineering_manager, developer, stakeholder, three_amigos) y helpers canAccess/getAccessibleModules.
+[2026-01-27 14:15] AUTH-006 PASSED: ProtectedRoute.jsx usa permissions.js, muestra Access Denied si no hay permiso y renderiza children si tiene acceso.
+[2026-01-27 14:25] AUTH-007 PASSED: Navbar muestra nombre/email, avatar inicial y botón logout que regresa a login al limpiar la sesión.
+[2026-01-27 14:50] TESTS: npm run lint (pass), npm run build (pass).
+[2026-01-27 14:55] PUSH: origin/infra-init updated (commits: Finish auth UI copy and mark stories; Silence react-hooks lint warnings in App).

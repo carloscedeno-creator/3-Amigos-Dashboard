@@ -1329,18 +1329,20 @@ export function useOnlineStatus() {
 - **RF-AUTH-006:** Redirección automática si no autenticado
 
 #### Requerimientos Técnicos
-- **RT-AUTH-001:** Componente `Login.jsx` con formulario
-- **RT-AUTH-002:** Componente `Signup.jsx` (opcional)
-- **RT-AUTH-003:** Componente `ForgotPassword.jsx`
+- **RT-AUTH-001:** Componente `Login.jsx` con formulario (copy en inglés)
+- **RT-AUTH-002:** Componente `Signup.jsx` (copy en inglés) con:
+  - Campo de confirmación de contraseña
+  - Validación de fuerza: mínimo 8 caracteres, mayúscula, minúscula, número y carácter especial
+- **RT-AUTH-003:** Componente `ForgotPassword.jsx` (copy en inglés)
 - **RT-AUTH-004:** Utilidad `authService.js` con funciones:
   - `login(email, password)`
-  - `signup(email, password)`
+  - `signUp(email, password)`
   - `logout()`
   - `resetPassword(email)`
   - `getCurrentUser()`
   - `isAuthenticated()`
 - **RT-AUTH-005:** Manejo de estados de carga y errores
-- **RT-AUTH-006:** Validación de formularios (email válido, password mínimo 6 caracteres)
+- **RT-AUTH-006:** Validación de formularios (email válido, password cumple política)
 
 #### Criterios de Aceptación
 - ✅ Usuario puede iniciar sesión con credenciales válidas
@@ -1873,6 +1875,21 @@ supabase.auth.onAuthStateChange((event, session) => {
   2) Validación/normalización de columnas obligatorias.
   3) Idempotencia por (`Issue ID` o `Key`) + `Updated`.
   4) Upsert en Supabase (issues, sprints, issue_sprints, epics, relaciones).
+- **RT-SYNC-004.1:** Mapeo de columnas Jira Cloud for Sheets → Supabase (por tabla):
+  - Identidad y frescura:
+    - `Key`, `Issue ID` → `issues.key`, `issues.issue_id` (PK/unique); control de idempotencia con `issues.updated_at` ← `Updated`.
+  - Proyecto / squad:
+    - `Project`, `Project ID` → `squads.project_id` y FK `issues.squad_id` para agregación por equipo.
+  - Fechas clave:
+    - `Actual start` → `issues.actual_start_at`
+    - `Resolved` → `issues.resolved_at`
+  - Puntos oficiales:
+    - `Story Points` (oficial) → `issues.story_points`
+  - Sprint:
+    - `Sprint.name`, `Sprint.startDate`, `Sprint.completeDate`, `Sprint.endDate`, `Sprint.state` → `sprints.*`
+    - Relación issue-sprint → `issue_sprints` con snapshot de fechas y SP en sprint.
+  - Aprobaciones y PRs:
+    - `PO Approved`, `Product Approved`, `QA Approved`, `PR for QA`, `PR for Staging`, `Product Approver` → campos de aprobación en `issues` (boolean + timestamp + approver cuando aplique).
 - **RT-SYNC-005:** Manejo de errores y resiliencia:
   - Retry con backoff ante 429/5xx de Google Sheets API.
   - Logs estructurados y métrica de filas procesadas/skipped.
