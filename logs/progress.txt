@@ -22,3 +22,5 @@
 [2026-01-27 14:05] AUTH-005 PASSED: permissions.js define ROLE_PERMISSIONS (admin, pm, engineering_manager, developer, stakeholder, three_amigos) y helpers canAccess/getAccessibleModules.
 [2026-01-27 14:15] AUTH-006 PASSED: ProtectedRoute.jsx usa permissions.js, muestra Access Denied si no hay permiso y renderiza children si tiene acceso.
 [2026-01-27 14:25] AUTH-007 PASSED: Navbar muestra nombre/email, avatar inicial y botón logout que regresa a login al limpiar la sesión.
+[2026-01-27 14:50] TESTS: npm run lint (pass), npm run build (pass).
+[2026-01-27 14:55] PUSH: origin/infra-init updated (commits: Finish auth UI copy and mark stories; Silence react-hooks lint warnings in App).
