@@ -1329,18 +1329,20 @@ export function useOnlineStatus() {
 - **RF-AUTH-006:** Redirección automática si no autenticado
 
 #### Requerimientos Técnicos
-- **RT-AUTH-001:** Componente `Login.jsx` con formulario
-- **RT-AUTH-002:** Componente `Signup.jsx` (opcional)
-- **RT-AUTH-003:** Componente `ForgotPassword.jsx`
+- **RT-AUTH-001:** Componente `Login.jsx` con formulario (copy en inglés)
+- **RT-AUTH-002:** Componente `Signup.jsx` (copy en inglés) con:
+  - Campo de confirmación de contraseña
+  - Validación de fuerza: mínimo 8 caracteres, mayúscula, minúscula, número y carácter especial
+- **RT-AUTH-003:** Componente `ForgotPassword.jsx` (copy en inglés)
 - **RT-AUTH-004:** Utilidad `authService.js` con funciones:
   - `login(email, password)`
-  - `signup(email, password)`
+  - `signUp(email, password)`
   - `logout()`
   - `resetPassword(email)`
   - `getCurrentUser()`
   - `isAuthenticated()`
 - **RT-AUTH-005:** Manejo de estados de carga y errores
-- **RT-AUTH-006:** Validación de formularios (email válido, password mínimo 6 caracteres)
+- **RT-AUTH-006:** Validación de formularios (email válido, password cumple política)
 
 #### Criterios de Aceptación
 - ✅ Usuario puede iniciar sesión con credenciales válidas

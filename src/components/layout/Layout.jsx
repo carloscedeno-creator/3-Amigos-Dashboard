@@ -10,7 +10,14 @@ const DEFAULT_NAV_ITEMS = [
   { id: "capacity", label: "Capacity" },
 ]
 
-export function Layout({ children, navItems = DEFAULT_NAV_ITEMS, activeView, onChangeView }) {
+export function Layout({
+  children,
+  navItems = DEFAULT_NAV_ITEMS,
+  activeView,
+  onChangeView,
+  user,
+  onLogout,
+}) {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
 
   const toggleMobileSidebar = () => {
@@ -24,7 +31,7 @@ export function Layout({ children, navItems = DEFAULT_NAV_ITEMS, activeView, onC
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
-      <Navbar onMenuClick={toggleMobileSidebar} />
+      <Navbar onMenuClick={toggleMobileSidebar} user={user} onLogout={onLogout} />
 
       <div className="flex">
         <Sidebar

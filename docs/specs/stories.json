@@ -212,7 +212,8 @@
       "acceptance_criteria": [
         "Login.jsx exists with email and password input fields",
         "Form validates email format",
-        "Form validates password minimum length (6 characters)",
+        "Form validates password policy (min 8 chars, upper, lower, number, special)",
+        "Signup flow includes confirm password and matches before submit",
         "Shows loading state during authentication",
         "Displays error messages for invalid credentials",
         "Calls authService.login() on form submit"
