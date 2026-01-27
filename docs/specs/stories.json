@@ -103,7 +103,7 @@
         "Environment variables load correctly in code (import.meta.env.VITE_SUPABASE_URL)",
         ".env.example has comments explaining each variable"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-005",
@@ -119,7 +119,7 @@
         "ESLint runs without errors on existing code",
         "Prettier formats code correctly"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-006",
@@ -135,7 +135,7 @@
         "Exports queryWithRetry() helper function",
         "Client uses singleton pattern (single instance)"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-007",
@@ -152,7 +152,7 @@
         "Layout component accepts children prop and renders them",
         "Components use TailwindCSS for styling"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-008",
@@ -168,7 +168,7 @@
         "Sidebar is collapsible on mobile screens",
         "Uses Lucide React icons for navigation items"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-009",
@@ -184,7 +184,7 @@
         "Overlay closes sidebar when clicked",
         "Sidebar slides in/out with smooth transition"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "AUTH-001",

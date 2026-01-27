@@ -5,3 +5,10 @@
 [2026-01-26 09:15] FRAMEWORK COMPLETED: All stories added for all 7 phases - Total: 60+ stories covering all 14 modules
 [2026-01-26 17:58] INFRA-001 PASSED: Vite React scaffold added, deps installed, build succeeded
 [2026-01-26 18:25] INFRA-002 PASSED: Tailwind 3 + PostCSS configured; custom palette working in App.jsx
+[2026-01-26 19:05] INFRA-003 PASSED: Path alias '@' added, base folders creados (.gitkeep), build ok.
+[2026-01-26 19:20] INFRA-004 PASSED: .env.example added with comments, .env.local ignorado, env helper usa import.meta.env, build ok.
+[2026-01-26 19:40] INFRA-005 PASSED: ESLint + Prettier config añadidos; lint ok; prettier check pasa.
+[2026-01-26 19:55] INFRA-006 PASSED: supabaseApi singleton creado (createClient), checkSupabaseConnection y queryWithRetry listos; build y lint ok.
+[2026-01-26 20:15] INFRA-007 PASSED: Layout/Sidebar/Navbar creados, children renderizados, Tailwind aplicado; lint y build ok.
+[2026-01-26 20:35] INFRA-008 PASSED: Sidebar con links e íconos Lucide, estado activo y colapsable en mobile; App actualizada; lint/build ok.
+[2026-01-26 20:50] INFRA-009 PASSED: Sidebar responsive con overlay y slide-in/out; botón hamburguesa móvil abre/cierra; lint/build ok.
