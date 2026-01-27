@@ -7,6 +7,7 @@ import { getConfig } from "./config.js"
 import { loadSheetData } from "./clients/sheet-client.js"
 import { getSupabaseClient } from "./clients/supabase-client.js"
 import { upsertSheetIssues } from "./processors/sheet-to-supabase.js"
+import { upsertNormalizedIssues } from "./processors/normalize-issues.js"
 
 async function main() {
   const config = getConfig()
@@ -17,16 +18,23 @@ async function main() {
     serviceRoleKey: config.supabaseServiceRoleKey,
   })
 
-  const upsertResult = await upsertSheetIssues({
+  const upsertRaw = await upsertSheetIssues({
     supabase,
     rows: sheetData.mapped,
     table: config.supabaseIssuesTable,
   })
 
+  const upsertNormalized = await upsertNormalizedIssues({
+    supabase,
+    rows: sheetData.mapped,
+    table: config.supabaseIssuesNormalizedTable,
+  })
+
   return {
     config,
     sheetRows: sheetData.mapped.length,
-    supabaseUpserted: upsertResult.count,
+    supabaseRawUpserted: upsertRaw.count,
+    supabaseNormalizedUpserted: upsertNormalized.count,
   }
 }
 
