@@ -1,0 +1,17 @@
+{
+  "name": "jira-supabase-sync",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "preview:sheet": "node scripts/preview-sheet.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "@supabase/supabase-js": "^2.93.1",
+    "axios": "^1.7.9",
+    "csv-parse": "^6.1.0"
+  }
+}
