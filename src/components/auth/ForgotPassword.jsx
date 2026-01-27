@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { resetPassword } from "@/utils/authService"
 
-const emailRegex = /\S+@\S+\.\S+/
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export function ForgotPassword({ onBackToLogin }) {
   const [email, setEmail] = useState("")
@@ -19,13 +19,13 @@ export function ForgotPassword({ onBackToLogin }) {
     setStatus({ loading: true, message: null, error: null })
     const { error } = await resetPassword(email)
     if (error) {
-      setStatus({ loading: false, message: null, error })
+      setStatus({ loading: false, message: null, error: error || "Could not send the email" })
       return
     }
 
     setStatus({
       loading: false,
-      message: "If the account exists, you will receive an email with instructions.",
+      message: "If the account exists, you'll receive an email with instructions.",
       error: null,
     })
   }
@@ -33,7 +33,7 @@ export function ForgotPassword({ onBackToLogin }) {
   return (
     <div className="mx-auto max-w-md rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
       <h2 className="text-xl font-semibold text-slate-900">Recover password</h2>
-      <p className="text-sm text-slate-600">Enter your email to receive a recovery link.</p>
+      <p className="text-sm text-slate-600">Enter your email to receive a reset link.</p>
 
       <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
         <div className="space-y-1">

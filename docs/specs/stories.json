@@ -17,7 +17,7 @@
         "File 'docs/specs/stories.json' exists with valid JSON structure",
         "File 'logs/progress.txt' exists and is ready for logging"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "PRD-001",
@@ -32,7 +32,7 @@
         "Limitaciones documentadas: sin columna Deleted ni Severity; burndown depende de fechas de sprint del sheet",
         "Idempotencia definida usando Issue ID/Key + Updated como control de frescura"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-001",
@@ -201,7 +201,7 @@
         "Exports resetPassword(email) function",
         "All functions handle errors and return consistent format"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "AUTH-002",
@@ -218,7 +218,7 @@
         "Displays error messages for invalid credentials",
         "Calls authService.login() on form submit"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "AUTH-003",
@@ -234,7 +234,7 @@
         "Token refresh happens automatically",
         "Loading state shown during auth check"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "AUTH-004",
@@ -250,7 +250,7 @@
         "Shows error message if email not found",
         "Has link back to login page"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "AUTH-005",
@@ -266,7 +266,7 @@
         "Exports getAccessibleModules(role) function",
         "Permissions follow PRD module structure"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "AUTH-006",
@@ -282,7 +282,7 @@
         "Shows 'Access Denied' message if no permission",
         "Integrates with permissions.js config"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "AUTH-007",
@@ -297,7 +297,7 @@
         "Dropdown menu for user actions (optional)",
         "Logout redirects to login page"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "SYNC-001",

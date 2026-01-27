@@ -1,11 +1,29 @@
 import { useState } from "react"
-import { login } from "@/utils/authService"
+import { login, signUp } from "@/utils/authService"
 
-const emailRegex = /\S+@\S+\.\S+/
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const passwordPolicy = {
+  minLength: 8,
+  upper: /[A-Z]/,
+  lower: /[a-z]/,
+  digit: /[0-9]/,
+  special: /[^A-Za-z0-9]/,
+}
 
-export function Login({ onSuccess, onForgotPassword, onCreateAccount }) {
+function validatePasswordPolicy(password) {
+  if (password.length < passwordPolicy.minLength) return "Min 8 characters"
+  if (!passwordPolicy.upper.test(password)) return "Must include uppercase"
+  if (!passwordPolicy.lower.test(password)) return "Must include lowercase"
+  if (!passwordPolicy.digit.test(password)) return "Must include number"
+  if (!passwordPolicy.special.test(password)) return "Must include special char"
+  return null
+}
+
+export function Login({ onSuccess, onForgotPassword }) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [isSignUp, setIsSignUp] = useState(false)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
 
@@ -17,13 +35,20 @@ export function Login({ onSuccess, onForgotPassword, onCreateAccount }) {
       setError("Invalid email")
       return
     }
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters")
+
+    const passwordError = validatePasswordPolicy(password)
+    if (passwordError) {
+      setError(`Invalid password: ${passwordError}`)
+      return
+    }
+
+    if (isSignUp && password !== confirmPassword) {
+      setError("Passwords do not match")
       return
     }
 
     setLoading(true)
-    const result = await login(email, password)
+    const result = isSignUp ? await signUp(email, password) : await login(email, password)
     setLoading(false)
 
     if (result.error) {
@@ -36,8 +61,27 @@ export function Login({ onSuccess, onForgotPassword, onCreateAccount }) {
 
   return (
     <div className="mx-auto max-w-md rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-      <h2 className="text-xl font-semibold text-slate-900">Sign in</h2>
-      <p className="text-sm text-slate-600">Access the Delivery Dashboard</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-semibold text-slate-900">
+            {isSignUp ? "Create account" : "Sign in"}
+          </h2>
+          <p className="text-sm text-slate-600">
+            {isSignUp ? "Create your dashboard access" : "Access the Delivery Dashboard"}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => {
+            setIsSignUp((prev) => !prev)
+            setError(null)
+            setConfirmPassword("")
+          }}
+          className="text-sm font-medium text-primary-600 hover:text-primary-700"
+        >
+          {isSignUp ? "I already have an account" : "Create account"}
+        </button>
+      </div>
 
       <form className="mt-4 space-y-4" onSubmit={handleSubmit}>
         <div className="space-y-1">
@@ -66,9 +110,27 @@ export function Login({ onSuccess, onForgotPassword, onCreateAccount }) {
             onChange={(e) => setPassword(e.target.value)}
             className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200"
             placeholder="••••••••"
-            autoComplete="current-password"
+            autoComplete={isSignUp ? "new-password" : "current-password"}
           />
+          <p className="text-xs text-slate-500">Min 8, uppercase, lowercase, number, special.</p>
         </div>
+
+        {isSignUp ? (
+          <div className="space-y-1">
+            <label htmlFor="confirmPassword" className="text-sm font-medium text-slate-800">
+              Confirm password
+            </label>
+            <input
+              id="confirmPassword"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200"
+              placeholder="••••••••"
+              autoComplete="new-password"
+            />
+          </div>
+        ) : null}
 
         {error ? <p className="text-sm text-danger-600">{error}</p> : null}
 
@@ -77,28 +139,21 @@ export function Login({ onSuccess, onForgotPassword, onCreateAccount }) {
           disabled={loading}
           className="w-full rounded-md bg-primary-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-70"
         >
-          {loading ? "Signing in..." : "Sign in"}
+          {loading ? (isSignUp ? "Creating account..." : "Signing in...") : isSignUp ? "Create account" : "Sign in"}
         </button>
       </form>
 
-      <div className="mt-4 text-right">
-        <button
-          type="button"
-          onClick={onForgotPassword}
-          className="text-sm font-medium text-primary-600 hover:text-primary-700"
-        >
-          Forgot your password?
-        </button>
-      </div>
-      <div className="mt-2 text-right">
-        <button
-          type="button"
-          onClick={onCreateAccount}
-          className="text-sm font-medium text-primary-600 hover:text-primary-700"
-        >
-          Create account
-        </button>
-      </div>
+      {!isSignUp ? (
+        <div className="mt-4 text-right">
+          <button
+            type="button"
+            onClick={onForgotPassword}
+            className="text-sm font-medium text-primary-600 hover:text-primary-700"
+          >
+            Forgot your password?
+          </button>
+        </div>
+      ) : null}
     </div>
   )
 }

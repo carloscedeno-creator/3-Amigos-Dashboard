@@ -15,6 +15,7 @@ _This file stores project-specific knowledge, conventions, and lessons learned f
 - Component files should be PascalCase (e.g., `UserProfile.tsx`)
 - One component per file
 - Place shared types in a `types.ts` file in the same directory
+- **2026-01-27:** All UI copy (labels, placeholders, messages) must be in English across components.
 
 ## 📝 Notes
 
