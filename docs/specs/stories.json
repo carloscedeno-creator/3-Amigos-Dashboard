@@ -313,7 +313,7 @@
         "src/index.js exists as entry point",
         "src/config.js exists for configuration"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "SYNC-002",
@@ -329,7 +329,7 @@
         "Uses exponential backoff for retries",
         "retry-helper.js exports retryWithExponentialBackoff function"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "SYNC-003",
