@@ -73,6 +73,7 @@ export function App() {
         }
       })
     } catch (error) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setConfigError(error?.message || "Faltan variables de entorno")
       setAuthLoading(false)
     }
@@ -92,6 +93,7 @@ export function App() {
   useEffect(() => {
     const allowedViews = accessibleNavItems.map((item) => item.id)
     if (allowedViews.length && !allowedViews.includes(activeView)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveView(allowedViews[0])
     }
   }, [accessibleNavItems, activeView])
