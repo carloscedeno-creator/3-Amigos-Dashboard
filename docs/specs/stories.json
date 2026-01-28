@@ -344,7 +344,7 @@
         "Implements upsert operations",
         "Handles transaction errors"
       ],
-    "passes": true
+      "passes": true
     },
     {
       "id": "SYNC-004",
@@ -359,7 +359,7 @@
         "Upserts sprints to Supabase squads table",
         "Handles pagination for multiple sprints"
       ],
-    "passes": true
+      "passes": true
     },
     {
       "id": "SYNC-005",
@@ -374,7 +374,7 @@
         "Upserts issues to Supabase issues table",
         "Processes issue history and status changes"
       ],
-    "passes": true
+      "passes": true
     },
     {
       "id": "SYNC-006",
@@ -451,7 +451,7 @@
         "Shows tooltip on hover",
         "Uses TailwindCSS for styling"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "OVERALL-002",
@@ -466,7 +466,7 @@
         "Uses cache service for performance",
         "Returns score from 0 to 100"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "OVERALL-003",
@@ -481,7 +481,7 @@
         "All functions use cache",
         "All functions return numbers 0-100"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "OVERALL-004",
@@ -498,7 +498,7 @@
         "Shows Average Velocity",
         "Shows loading state during fetch"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "OVERALL-005",
@@ -514,7 +514,7 @@
         "Highlights sprints at risk (< 70% progress)",
         "Filters by squad (optional)"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "OVERALL-006",
@@ -531,7 +531,7 @@
         "Supports horizontal scroll",
         "Shows tooltips on hover"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "OVERALL-007",
@@ -547,7 +547,7 @@
         "Displays alert count badge",
         "Links to relevant modules"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "DELIVERY-001",
@@ -563,7 +563,7 @@
         "Exports getThroughput() function",
         "All functions accept squadId, sprintId, dateRange filters"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "DELIVERY-002",
@@ -580,7 +580,7 @@
         "Shows historical trend chart",
         "Has filters for squad, sprint, date range"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "DELIVERY-003",
@@ -628,7 +628,7 @@
         "Exports getSprintIssues() function",
         "Exports getScopeChanges() function"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "PROJECTS-002",
@@ -644,7 +644,7 @@
         "Shows velocity",
         "Shows scope changes if applicable"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "PROJECTS-003",
@@ -660,7 +660,7 @@
         "Displays tooltips with counts",
         "Uses statusHelper for Done determination"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "PROJECTS-004",
@@ -676,7 +676,7 @@
         "Shows change dates",
         "Calculates total impact"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "PROJECTS-005",
@@ -693,7 +693,7 @@
         "Includes issues table",
         "Triggers download"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "DEV-001",

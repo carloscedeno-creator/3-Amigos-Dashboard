@@ -8,7 +8,12 @@ import { ProtectedRoute } from "@/components/common/ProtectedRoute"
 import { getAccessibleModules, MODULES } from "@/config/permissions"
 import { getUserRole, logout, onAuthStateChange } from "@/utils/authService"
 import { Layout } from "@/components/layout/Layout"
-import { SampleCard } from "@/components/SampleCard"
+import { OverallView } from "@/components/overall/OverallView"
+import { ActiveSprintsSummary } from "@/components/overall/ActiveSprintsSummary"
+import { UnifiedTimeline } from "@/components/overall/UnifiedTimeline"
+import { QuickAlerts } from "@/components/overall/QuickAlerts"
+import { DeliveryKPIs } from "@/components/delivery/DeliveryKPIs"
+import { ProjectsMetrics } from "@/components/projects/ProjectsMetrics"
 
 const NAV_ITEMS = [
   { id: MODULES.OVERALL, label: "Overall View", icon: LayoutDashboard },
@@ -21,25 +26,32 @@ const NAV_ITEMS = [
 const VIEW_COPY = {
   overall: {
     title: "Overall View",
-    description: "General overview of squads and their KPIs.",
+    description: "KPIs, active sprints, alerts, and unified timeline.",
   },
   delivery: {
     title: "Delivery Metrics",
-    description: "Velocity, throughput, and delivery cadence.",
+    description: "Delivery Success Score, velocity, cycle time, and throughput.",
   },
   projects: {
     title: "Projects Metrics",
-    description: "Sprints, scope changes, and board state.",
+    description: "Sprint metrics, board state, scope changes, and PDF export.",
   },
   developers: {
     title: "Developers",
-    description: "Per-developer KPIs and workload.",
+    description: "Per-developer KPIs and workload (coming soon).",
   },
   capacity: {
     title: "Capacity",
-    description: "Planned vs available capacity per sprint.",
+    description: "Planned vs available capacity per sprint (coming soon).",
   },
 }
+
+const Placeholder = ({ title, description }) => (
+  <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+    <p className="text-lg font-semibold text-slate-900">{title}</p>
+    <p className="text-sm text-slate-600">{description}</p>
+  </div>
+)
 
 export function App() {
   const [activeView, setActiveView] = useState(MODULES.OVERALL)
@@ -103,6 +115,41 @@ export function App() {
   const handleLogout = async () => {
     await logout()
     setUser(null)
+  }
+
+  const renderActiveView = () => {
+    if (activeView === MODULES.OVERALL) {
+      return (
+        <div className="space-y-6">
+          <OverallView />
+          <div className="grid gap-6 lg:grid-cols-3">
+            <div className="lg:col-span-2 space-y-6">
+              <UnifiedTimeline />
+              <ActiveSprintsSummary />
+            </div>
+            <QuickAlerts />
+          </div>
+        </div>
+      )
+    }
+
+    if (activeView === MODULES.DELIVERY) {
+      return <DeliveryKPIs />
+    }
+
+    if (activeView === MODULES.PROJECTS) {
+      return <ProjectsMetrics />
+    }
+
+    if (activeView === MODULES.DEVELOPERS) {
+      return <Placeholder title="Developers" description="Per-developer KPIs and workload will be shown here." />
+    }
+
+    if (activeView === MODULES.CAPACITY) {
+      return <Placeholder title="Capacity" description="Planned vs available capacity per sprint will be shown here." />
+    }
+
+    return <Placeholder title="Coming soon" description="Select a module to view its dashboard." />
   }
 
   if (authLoading) {
@@ -189,26 +236,7 @@ export function App() {
             </span>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="rounded-lg border border-primary-100 bg-primary-50 px-4 py-3 text-primary-800">
-              <p className="text-sm font-semibold">Primary</p>
-              <p className="text-sm">Extended palette ready for UI.</p>
-            </div>
-            <div className="rounded-lg border border-success-100 bg-success-50 px-4 py-3 text-success-800">
-              <p className="text-sm font-semibold">Success</p>
-              <p className="text-sm">Positive states and confirmations.</p>
-            </div>
-            <div className="rounded-lg border border-warning-100 bg-warning-50 px-4 py-3 text-warning-800">
-              <p className="text-sm font-semibold">Warning</p>
-              <p className="text-sm">Preventive messages and notices.</p>
-            </div>
-            <div className="rounded-lg border border-danger-100 bg-danger-50 px-4 py-3 text-danger-800">
-              <p className="text-sm font-semibold">Danger</p>
-              <p className="text-sm">Errors and critical states.</p>
-            </div>
-          </div>
-
-          <SampleCard />
+          {renderActiveView()}
         </div>
       </ProtectedRoute>
     </Layout>
