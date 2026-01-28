@@ -95,3 +95,9 @@ Sigue el ciclo PPRE manualmente:
 - Ver `.AgenticStrataFramework/` para documentación completa del framework
 - Consultar `docs/reference/` para guías específicas de API, DB, UI, etc.
 - Revisar `src/**/agents.md` para conocimiento específico del proyecto
+
+## ✅ Pruebas y calidad
+
+- Lint/Build frontend: `npm run lint` y `npm run build`
+- E2E (Playwright, smoke login): `npm run test:e2e` (usa credenciales de `.env`)
+- Backend sync (Vitest, Node): `cd jira-supabase-sync && npm test` (`test:watch`, `test:cov` disponibles)
