@@ -30,3 +30,8 @@
 [2026-01-27 18:05] SYNC-005: sprint_metrics agregados (issues/SP por sprint, removidos). Nueva tabla + env; pipeline calcula y upserta métricas por sprint.
 [2026-01-28 06:55] E2E-001: Playwright smoke login agregado; script npm run test:e2e; Vite permite host.docker.internal; credenciales de prueba en .env (no versionado).
 [2026-01-28 07:06] TEST-API-001: Vitest configurado en jira-supabase-sync; tests para config, issue-sprints y scope-change-detector pasan.
+[2026-01-28 07:18] SYNC-003 PASSED: supabase-client refactor con upsertWithRetry (chunks + reintentos), service role validado.
+[2026-01-28 07:20] SYNC-004 PASSED: sprint-processor registra sprints desde Sheet; tabla sprints creada.
+[2026-01-28 07:22] SYNC-006 PASSED: scope-change-detector detecta added/removed/cambio SP y loguea en sprint_scope_changes.
+[2026-01-28 07:24] SYNC-007/008 PASSED: sync.js orquesta incremental y full (sheet → Supabase) con sync_state.
+[2026-01-28 07:26] SYNC-009 PASSED: workflow GH Actions con incremental cada 30m y full diario 03:00.

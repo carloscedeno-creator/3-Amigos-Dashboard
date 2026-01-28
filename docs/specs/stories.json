@@ -51,7 +51,7 @@
         "Build command 'npm run build' produces dist folder",
         "index.html exists and loads main.jsx"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "INFRA-002",
@@ -344,7 +344,7 @@
         "Implements upsert operations",
         "Handles transaction errors"
       ],
-      "passes": false
+    "passes": true
     },
     {
       "id": "SYNC-004",
@@ -359,7 +359,7 @@
         "Upserts sprints to Supabase squads table",
         "Handles pagination for multiple sprints"
       ],
-      "passes": false
+    "passes": true
     },
     {
       "id": "SYNC-005",
@@ -374,7 +374,7 @@
         "Upserts issues to Supabase issues table",
         "Processes issue history and status changes"
       ],
-      "passes": false
+    "passes": true
     },
     {
       "id": "SYNC-006",
@@ -389,7 +389,7 @@
         "Detects added, removed, and SP changed issues",
         "Saves changes to sprint_scope_changes table"
       ],
-      "passes": false
+    "passes": true
     },
     {
       "id": "SYNC-007",
@@ -404,7 +404,7 @@
         "Only syncs changes since last sync",
         "Updates last sync date after completion"
       ],
-      "passes": false
+    "passes": true
     },
     {
       "id": "SYNC-008",
@@ -419,7 +419,7 @@
         "Recalculates all metrics",
         "Refreshes materialized views"
       ],
-      "passes": false
+    "passes": true
     },
     {
       "id": "SYNC-009",
