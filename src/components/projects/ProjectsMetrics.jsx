@@ -32,6 +32,9 @@ const deriveTrend = (value, target) => {
 }
 
 export function ProjectsMetrics() {
+  const squadSelectId = "projects-squad-select"
+  const sprintSelectId = "projects-sprint-select"
+
   const [squads, setSquads] = useState([])
   const [sprints, setSprints] = useState([])
   const [filters, setFilters] = useState({ squadId: "", sprintId: "" })
@@ -40,6 +43,7 @@ export function ProjectsMetrics() {
   const [metrics, setMetrics] = useState(null)
   const [issues, setIssues] = useState([])
   const [scopeChanges, setScopeChanges] = useState({ added: [], removed: [], changed: [] })
+  const [emptyState, setEmptyState] = useState(null)
   const reportRef = useRef(null)
   const [exporting, setExporting] = useState(false)
 
@@ -47,13 +51,18 @@ export function ProjectsMetrics() {
     const loadSquads = async () => {
       setLoading(true)
       setError(null)
+      setEmptyState(null)
       try {
         const data = await getSquads()
         setSquads(data)
         const firstSquad = data?.[0]?.id || ""
         setFilters((prev) => ({ ...prev, squadId: prev.squadId || firstSquad }))
+        if (!data?.length) {
+          setEmptyState("No squads disponibles. Agrega squads en la fuente de datos.")
+        }
       } catch (loadError) {
         setError(loadError?.message || "Unable to load squads.")
+      } finally {
         setLoading(false)
       }
     }
@@ -65,13 +74,18 @@ export function ProjectsMetrics() {
       if (!filters.squadId) return
       setLoading(true)
       setError(null)
+      setEmptyState(null)
       try {
         const sprintList = await getSprintsBySquad(filters.squadId)
         setSprints(sprintList)
         const firstSprint = sprintList?.[0]?.id || ""
         setFilters((prev) => ({ ...prev, sprintId: prev.sprintId || firstSprint }))
+        if (!sprintList?.length) {
+          setEmptyState("No sprints disponibles para este squad.")
+        }
       } catch (loadError) {
         setError(loadError?.message || "Unable to load sprints.")
+      } finally {
         setLoading(false)
       }
     }
@@ -83,6 +97,7 @@ export function ProjectsMetrics() {
       if (!filters.squadId || !filters.sprintId) return
       setLoading(true)
       setError(null)
+      setEmptyState(null)
       try {
         const [metricsData, issuesData, scopeData] = await Promise.all([
           getSprintMetrics({ squadId: filters.squadId, sprintId: filters.sprintId }),
@@ -92,6 +107,9 @@ export function ProjectsMetrics() {
         setMetrics(metricsData)
         setIssues(issuesData)
         setScopeChanges(scopeData)
+        if (!metricsData && (!issuesData?.length || !scopeData)) {
+          setEmptyState("No hay datos para el sprint seleccionado.")
+        }
       } catch (loadError) {
         setError(loadError?.message || "Unable to load projects metrics.")
       } finally {
@@ -132,7 +150,7 @@ export function ProjectsMetrics() {
     [sprints],
   )
 
-  if (loading && !metrics) {
+  if (loading && !metrics && !emptyState) {
     return (
       <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="flex items-center gap-3">
@@ -151,6 +169,18 @@ export function ProjectsMetrics() {
           Projects metrics unavailable
         </div>
         <p className="mt-1 text-sm">{error}</p>
+      </section>
+    )
+  }
+
+  if (emptyState) {
+    return (
+      <section className="rounded-xl border border-slate-200 bg-white p-6 text-slate-700 shadow-sm">
+        <div className="flex items-center gap-2 font-semibold">
+          <AlertCircle className="h-5 w-5 text-amber-500" />
+          {emptyState}
+        </div>
+        <p className="mt-1 text-sm text-slate-600">Revisa que existan squads y sprints en la fuente de datos.</p>
       </section>
     )
   }
@@ -179,8 +209,11 @@ export function ProjectsMetrics() {
 
       <div className="mx-auto grid max-w-6xl gap-3 md:grid-cols-3">
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-semibold uppercase text-slate-500">Squad</label>
+          <label className="text-xs font-semibold uppercase text-slate-500" htmlFor={squadSelectId}>
+            Squad
+          </label>
           <select
+            id={squadSelectId}
             className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm"
             value={filters.squadId}
             data-export-ignore
@@ -195,18 +228,26 @@ export function ProjectsMetrics() {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-semibold uppercase text-slate-500">Sprint</label>
+          <label className="text-xs font-semibold uppercase text-slate-500" htmlFor={sprintSelectId}>
+            Sprint
+          </label>
           <select
+            id={sprintSelectId}
             className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 shadow-sm"
             value={filters.sprintId}
             data-export-ignore
             onChange={(e) => setFilters((prev) => ({ ...prev, sprintId: e.target.value }))}
+            disabled={!sprintOptions.length}
           >
-            {sprintOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
+            {sprintOptions.length === 0 ? (
+              <option value="">No sprints</option>
+            ) : (
+              sprintOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))
+            )}
           </select>
         </div>
 

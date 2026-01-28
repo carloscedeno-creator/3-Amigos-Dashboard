@@ -626,7 +626,8 @@
         "Exports getSprintsBySquad() function",
         "Exports getSprintMetrics() function",
         "Exports getSprintIssues() function",
-        "Exports getScopeChanges() function"
+        "Exports getScopeChanges() function",
+        "Caches responses with TTL >= 5 minutes and allows forceRefresh"
       ],
       "passes": true
     },
@@ -642,7 +643,10 @@
         "Has sprint dropdown (filtered by squad)",
         "Displays SP Goal vs SP Done",
         "Shows velocity",
-        "Shows scope changes if applicable"
+        "Shows scope changes if applicable",
+        "Defaults to first available squad/sprint and shows empty state if none",
+        "Loading and error states are visible and do not break the page",
+        "PDF export includes selected squad/sprint metadata"
       ],
       "passes": true
     },
@@ -658,7 +662,8 @@
         "Groups issues by status (Done, In Progress, To Do, Blocked)",
         "Shows percentages",
         "Displays tooltips with counts",
-        "Uses statusHelper for Done determination"
+        "Uses statusHelper for Done determination",
+        "Handles empty data by showing 0% and a friendly message"
       ],
       "passes": true
     },
@@ -674,7 +679,8 @@
         "Lists removed issues",
         "Lists SP changes",
         "Shows change dates",
-        "Calculates total impact"
+        "Calculates total impact",
+        "If there are no scope changes, shows empty state instead of blank list"
       ],
       "passes": true
     },
@@ -691,7 +697,8 @@
         "Creates PDF with sprint info",
         "Includes metrics and charts",
         "Includes issues table",
-        "Triggers download"
+        "Triggers download",
+        "PDF excludes UI controls (data-export-ignore) and includes squad/sprint meta"
       ],
       "passes": true
     },
@@ -708,7 +715,7 @@
         "Exports getDeveloperIssues() function",
         "Queries v_developer_sprint_metrics_complete view"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "DEV-002",

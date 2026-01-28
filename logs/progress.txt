@@ -35,3 +35,16 @@
 [2026-01-28 07:22] SYNC-006 PASSED: scope-change-detector detecta added/removed/cambio SP y loguea en sprint_scope_changes.
 [2026-01-28 07:24] SYNC-007/008 PASSED: sync.js orquesta incremental y full (sheet → Supabase) con sync_state.
 [2026-01-28 07:26] SYNC-009 PASSED: workflow GH Actions con incremental cada 30m y full diario 03:00.
+[2026-01-28 07:35] SYNC-005 PASSED: issue-processor ahora obtiene issues desde Jira (JQL + paginación), incluye historial de estatus en payload y upserta en Supabase con retry; npm test ok.
+[2026-01-28 08:32] OVERALL-001 PASSED: KPICard.jsx creado (trend up/down/neutral, tooltip, color/icon), tipos en types.ts; lint, build y test:e2e ok.
+[2026-01-28 08:36] OVERALL-002 PASSED: overallViewService.js creado con getDeliverySuccessScore (promedio 0-100, cache TTL, clamp); lint, build y test:e2e ok.
+[2026-01-28 08:44] OVERALL-003 PASSED: overallViewService ahora incluye getQualityScore, getTeamHealthScore y getAverageVelocity (0-100, cache, clamp); lint, build y test:e2e ok.
+[2026-01-28 08:47] OVERALL-004 PASSED: OverallView.jsx muestra 4 KPICards (Delivery, Quality, Team Health, Average Velocity) con loading state; lint, build y test:e2e ok.
+[2026-01-28 08:56] OVERALL-005 PASSED: ActiveSprintsSummary.jsx lista sprints con progreso SP, días restantes, riesgo <70% y filtro por squad; lint, build y test:e2e ok.
+[2026-01-28 09:07] OVERALL-006 PASSED: UnifiedTimeline.jsx + GanttChart.jsx muestran iniciativas y sprints con línea de hoy, scroll horizontal y tooltips; lint, build y test:e2e ok.
+[2026-01-28 09:09] OVERALL-007 PASSED: QuickAlerts.jsx muestra alertas de baja velocidad, issues bloqueados y sprints por cerrar, con badges y links; lint, build y test:e2e ok.
+[2026-01-28 09:14] DELIVERY-001 PASSED: deliveryKPIService.js creado con getDeliveryScore, getVelocity, getCycleTime y getThroughput (filtros squad/sprint/dateRange, cache TTL, mocks); lint, build y test:e2e ok.
+[2026-01-28 10:15] OVERALL-008 PASSED: App.jsx ahora renderiza OverallView, timeline, alertas y sprints activos dentro del módulo Overall; placeholders para módulos futuros.
+[2026-01-28 10:15] DELIVERY-002 PASSED: Módulo Delivery Metrics UI agregado (filters, KPIs con targets, gráficos Recharts de score histórico y breakdown); usa deliveryKPIService y cache; npm run lint ok.
+[2026-01-28 11:05] PROJECTS-006 DONE: Módulo 6 UI endurecido con estados vacíos/errores (squads/sprints sin datos), BoardStateBreakdown sin data ficticia y ScopeChangesList con estado vacío; PDF ya excluía controles. Lint y build pasan.
+[2026-01-28 11:40] DEV-001 PASSED: developerMetricsApi service creado con caché TTL, Supabase-first (vista v_developer_sprint_metrics_complete) y mocks de respaldo; normaliza métricas, burndown e issues por developer.

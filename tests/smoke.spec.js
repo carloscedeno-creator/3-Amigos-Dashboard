@@ -13,7 +13,8 @@ test.describe("Smoke - login", () => {
     await page.getByLabel("Password").fill(password)
     await page.getByRole("button", { name: "Sign in" }).click()
 
-    // After login, dashboard header should be visible
-    await expect(page.getByText("Delivery Dashboard")).toBeVisible()
+    // After login, confirm dashboard content (not the login page)
+    await expect(page.getByRole("button", { name: "Logout" })).toBeVisible()
+    await expect(page.getByRole("heading", { name: "Overall View", level: 2 })).toBeVisible()
   })
 })
