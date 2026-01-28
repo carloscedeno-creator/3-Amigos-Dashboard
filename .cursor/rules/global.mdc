@@ -62,6 +62,8 @@ YOU MUST FOLLOW THE ARCHITECTURE AND WORKFLOWS DEFINED IN `.AgenticStrataFramewo
 - Confirm user approval to execute, then perform RESET explicitly.
 - Load only the files needed for that story; avoid unrelated docs.
 - State the validation you will run (e.g., build/tests) before finishing.
+- Required checks per change (frontend): `npm run lint && npm run build && npm run test:e2e` (Playwright smoke).
+- Required checks per change (backend sync): `cd jira-supabase-sync && npm test`.
 - Do not start another story or edit unrelated files without a fresh PLAN+RESET.
 - If a process error occurs, update `docs/reference/workflow.md` with the lesson.
 - Scope guardrail: limit all file ops to `C:\Users\carlo\OneDrive\Documents\Delivery Manager Reporter` unless the user explicitly asks otherwise.

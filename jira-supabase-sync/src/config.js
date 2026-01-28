@@ -1,4 +1,4 @@
-const requiredEnv = ["SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY"]
+/* global process */
 
 function readEnv(key) {
   const value = process.env[key]
@@ -20,6 +20,14 @@ export function getConfig() {
   const supabaseIssuesTable = process.env.SUPABASE_ISSUES_TABLE || "sheet_issues_raw"
   const supabaseIssuesNormalizedTable =
     process.env.SUPABASE_ISSUES_NORMALIZED_TABLE || "issues_normalized"
+  const supabaseIssueSprintsTable =
+    process.env.SUPABASE_ISSUE_SPRINTS_TABLE || "issue_sprints"
+  const supabaseSprintMetricsTable =
+    process.env.SUPABASE_SPRINT_METRICS_TABLE || "sprint_metrics"
+  const supabaseScopeChangesTable =
+    process.env.SUPABASE_SCOPE_CHANGES_TABLE || "sprint_scope_changes"
+  const supabaseSyncStateTable = process.env.SUPABASE_SYNC_STATE_TABLE || "sync_state"
+  const supabaseSprintsTable = process.env.SUPABASE_SPRINTS_TABLE || "sprints"
 
   return {
     // Optional for Jira (not needed for CSV->Supabase path)
@@ -31,5 +39,10 @@ export function getConfig() {
     sheetCsvUrl,
     supabaseIssuesTable,
     supabaseIssuesNormalizedTable,
+    supabaseIssueSprintsTable,
+    supabaseSprintMetricsTable,
+    supabaseScopeChangesTable,
+    supabaseSyncStateTable,
+    supabaseSprintsTable,
   }
 }

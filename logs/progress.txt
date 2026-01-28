@@ -26,3 +26,7 @@
 [2026-01-27 14:55] PUSH: origin/infra-init updated (commits: Finish auth UI copy and mark stories; Silence react-hooks lint warnings in App).
 [2026-01-27 15:10] SYNC-001 PASSED: jira-supabase-sync scaffolded (package.json, config.js, index.js); deps axios.
 [2026-01-27 16:30] SYNC-002/SUPABASE: CSV->Supabase sync pipeline added with sheet mapper, raw and normalized upserts, GA cron every 30m, docs + env templates; Jira creds optional.
+[2026-01-27 17:30] SYNC-004: issue_sprints sync added (scope tracking). Upsert issue-key/sprint pairs, mark removed, env var + schema doc updated.
+[2026-01-27 18:05] SYNC-005: sprint_metrics agregados (issues/SP por sprint, removidos). Nueva tabla + env; pipeline calcula y upserta métricas por sprint.
+[2026-01-28 06:55] E2E-001: Playwright smoke login agregado; script npm run test:e2e; Vite permite host.docker.internal; credenciales de prueba en .env (no versionado).
+[2026-01-28 07:06] TEST-API-001: Vitest configurado en jira-supabase-sync; tests para config, issue-sprints y scope-change-detector pasan.

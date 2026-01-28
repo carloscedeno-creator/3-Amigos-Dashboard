@@ -1,41 +1,21 @@
 // Load local .env first (cwd), then fallback to repo root .env
+/* global process */
+import path from "path"
+import { fileURLToPath } from "url"
 import dotenv from "dotenv"
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 dotenv.config()
-dotenv.config({ path: new URL("../.env", import.meta.url).pathname })
-dotenv.config({ path: new URL("../../.env", import.meta.url).pathname })
-import { getConfig } from "./config.js"
-import { loadSheetData } from "./clients/sheet-client.js"
-import { getSupabaseClient } from "./clients/supabase-client.js"
-import { upsertSheetIssues } from "./processors/sheet-to-supabase.js"
-import { upsertNormalizedIssues } from "./processors/normalize-issues.js"
+dotenv.config({ path: path.resolve(__dirname, "../.env") })
+dotenv.config({ path: path.resolve(__dirname, "../../.env") })
+import { fullSync, incrementalSync } from "./sync/sync.js"
 
 async function main() {
-  const config = getConfig()
-  const sheetData = await loadSheetData(config.sheetCsvUrl)
-
-  const supabase = getSupabaseClient({
-    url: config.supabaseUrl,
-    serviceRoleKey: config.supabaseServiceRoleKey,
-  })
-
-  const upsertRaw = await upsertSheetIssues({
-    supabase,
-    rows: sheetData.mapped,
-    table: config.supabaseIssuesTable,
-  })
-
-  const upsertNormalized = await upsertNormalizedIssues({
-    supabase,
-    rows: sheetData.mapped,
-    table: config.supabaseIssuesNormalizedTable,
-  })
-
-  return {
-    config,
-    sheetRows: sheetData.mapped.length,
-    supabaseRawUpserted: upsertRaw.count,
-    supabaseNormalizedUpserted: upsertNormalized.count,
-  }
+  const mode = process.env.SYNC_MODE === "full" ? "full" : "incremental"
+  const result = mode === "full" ? await fullSync() : await incrementalSync()
+  return result
 }
 
 main().catch((error) => {

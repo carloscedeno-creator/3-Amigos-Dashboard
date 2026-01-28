@@ -14,7 +14,8 @@ function normalizeSheetIssue(row) {
     resolved: row.resolved || null,
     resolution: row.resolution || null,
     created_at: row.created || null,
-    parent_key: row.parent || null,
+    // Ignore parent link to avoid FK issues when parent rows are absent (e.g. epics)
+    parent_key: null,
     payload: row, // keep full source for traceability
   }
 }

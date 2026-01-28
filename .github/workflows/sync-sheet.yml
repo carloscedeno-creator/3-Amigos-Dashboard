@@ -3,6 +3,7 @@ name: Sync Sheet to Supabase
 on:
   schedule:
     - cron: "*/30 * * * *"  # every 30 minutes
+    - cron: "0 3 * * *"     # daily full sync
   workflow_dispatch:
 
 jobs:
@@ -32,4 +33,34 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           SHEET_CSV_URL: ${{ secrets.SHEET_CSV_URL }}
           SUPABASE_ISSUES_TABLE: ${{ secrets.SUPABASE_ISSUES_TABLE }}
+        run: npm start
+
+  full-sync:
+    if: github.event.schedule == '0 3 * * *'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: jira-supabase-sync
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: jira-supabase-sync/package-lock.json
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Run full sync
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SHEET_CSV_URL: ${{ secrets.SHEET_CSV_URL }}
+          SUPABASE_ISSUES_TABLE: ${{ secrets.SUPABASE_ISSUES_TABLE }}
+          SYNC_MODE: full
         run: npm start

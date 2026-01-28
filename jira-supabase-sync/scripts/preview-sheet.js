@@ -1,3 +1,4 @@
+/* global process */
 import axios from "axios"
 import { parse } from "csv-parse/sync"
 import { mapSheetRows } from "../src/utils/sheet-mapper.js"
