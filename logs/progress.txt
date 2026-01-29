@@ -48,3 +48,5 @@
 [2026-01-28 10:15] DELIVERY-002 PASSED: Módulo Delivery Metrics UI agregado (filters, KPIs con targets, gráficos Recharts de score histórico y breakdown); usa deliveryKPIService y cache; npm run lint ok.
 [2026-01-28 11:05] PROJECTS-006 DONE: Módulo 6 UI endurecido con estados vacíos/errores (squads/sprints sin datos), BoardStateBreakdown sin data ficticia y ScopeChangesList con estado vacío; PDF ya excluía controles. Lint y build pasan.
 [2026-01-28 11:40] DEV-001 PASSED: developerMetricsApi service creado con caché TTL, Supabase-first (vista v_developer_sprint_metrics_complete) y mocks de respaldo; normaliza métricas, burndown e issues por developer.
+[2026-01-29 09:10] SYNC-009 PASSED: Cron GitHub Actions operativo (incremental cada 30m, full 03:00); pipeline opcional Jira→Supabase habilitado; dashboards leyendo datos reales.
+[2026-01-29 09:12] DEV-002 PASSED: DeveloperMetrics.jsx listo con selectores, KPIs (done rate, SP, issues, cycle time), burndown y tabla de issues desde Supabase.

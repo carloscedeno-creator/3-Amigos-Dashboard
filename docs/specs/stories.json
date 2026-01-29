@@ -435,7 +435,7 @@
         "GitHub Actions workflow exists as alternative",
         "Environment variables configured"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "OVERALL-001",
@@ -732,7 +732,7 @@
         "Shows average cycle time",
         "Displays charts and tables"
       ],
-      "passes": false
+      "passes": true
     },
     {
       "id": "DEV-003",
