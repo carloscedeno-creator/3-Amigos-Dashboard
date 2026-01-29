@@ -91,3 +91,6 @@ If you fix a bug and do not update a `.md` file, you have **failed the protocol*
 - PRD location: `docs/specs/prd.md` - Single source of truth
 - Stories location: `docs/specs/stories.json` - Executable atoms
 - Completed specs: `docs/done_specs/` - Archive location
+- Active Sprints rules (UI): data from `sprint_metrics` + `sprints` + `issue_sprints`/`issues_normalized`; show only sprints with SP>0, no end_date pasada, y antigüedad < 90 días (end_date o last_seen_at/updated_at).
+- Real data rule (tableros Overall/Delivery/Projects): no mocks en prod; todas las métricas deben venir de Supabase usando tablas/vistas reales (issues_normalized, sprint_metrics, issue_sprints, scope_changes, etc.). Si falta dato, mostrar estado vacío/error, no defaults sintéticos.
+- Active Sprints refinado: requerir end_date presente, proyecto válido (no Unknown/vacío), descartar state closed/complete; ordenar por end_date más cercana.

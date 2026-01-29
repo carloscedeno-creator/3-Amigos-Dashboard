@@ -13,6 +13,7 @@ export function parseSprintNames(value) {
 
 function buildCurrentAssociations(rows) {
   const associations = []
+  const seen = new Set()
   for (const row of rows) {
     const issueKey = row.key
     if (!issueKey) continue
@@ -20,6 +21,9 @@ function buildCurrentAssociations(rows) {
     if (!sprintNames.length) continue
 
     for (const sprintName of sprintNames) {
+      const dedupeKey = `${issueKey}::${sprintName}`
+      if (seen.has(dedupeKey)) continue
+      seen.add(dedupeKey)
       associations.push({
         issue_key: issueKey,
         sprint_name: sprintName,

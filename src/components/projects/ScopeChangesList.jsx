@@ -35,6 +35,15 @@ export function ScopeChangesList({ changes = { added: [], removed: [], changed: 
   const added = changes?.added || []
   const removed = changes?.removed || []
   const changed = changes?.changed || []
+  const isEmpty = !added.length && !removed.length && !changed.length
+
+  if (isEmpty) {
+    return (
+      <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+        No hubo cambios de scope en este sprint.
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-3">

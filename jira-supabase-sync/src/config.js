@@ -12,6 +12,13 @@ function readEnvOptional(key) {
   return process.env[key] || null
 }
 
+function readEnvBoolOptional(key, defaultValue = false) {
+  const val = process.env[key]
+  if (val == null) return defaultValue
+  const normalized = String(val).toLowerCase()
+  return normalized === "1" || normalized === "true" || normalized === "yes" || normalized === "on"
+}
+
 export function getConfig() {
   const sheetCsvUrl =
     process.env.SHEET_CSV_URL ||
@@ -33,6 +40,9 @@ export function getConfig() {
     // Optional for Jira (not needed for CSV->Supabase path)
     jiraBaseUrl: readEnvOptional("JIRA_BASE_URL"),
     jiraApiToken: readEnvOptional("JIRA_API_TOKEN"),
+    jiraBoardId: readEnvOptional("JIRA_BOARD_ID"),
+    jiraJql: readEnvOptional("JIRA_JQL"),
+    jiraSyncEnabled: readEnvBoolOptional("JIRA_SYNC_ENABLED", false),
     supabaseUrl: readEnv("SUPABASE_URL"),
     supabaseServiceRoleKey: readEnv("SUPABASE_SERVICE_ROLE_KEY"),
     syncIntervalMinutes: Number(process.env.SYNC_INTERVAL_MINUTES || 30),

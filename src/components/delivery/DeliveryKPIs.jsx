@@ -1,163 +1,12 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { Activity, AlertCircle, Gauge, Loader2, PackageCheck, Timer } from "lucide-react"
 import { KPICard } from "../common/KPICard"
 import { DeliveryKPIFilters } from "./DeliveryKPIFilters"
 import { DeliveryScoreChart } from "./DeliveryScoreChart"
 import { ComponentBreakdownChart } from "./ComponentBreakdownChart"
-import { getCycleTime, getDeliveryScore, getThroughput, getVelocity } from "../../services/deliveryKPIService"
+import { fetchDeliveryMetrics, getDeliveryProjects } from "../../services/deliveryKPIService"
 
-const SAMPLE_SCENARIOS = {
-  all: {
-    label: "All squads",
-    targets: { delivery: 82, velocity: 36, cycleTime: 6, throughput: 16 },
-    sprints: [
-      {
-        id: "current",
-        label: "Current sprint",
-        deliveryScores: [82, 79, 84],
-        velocity: [34, 36, 35],
-        cycleTime: [6.4, 6.1, 5.9],
-        throughput: [15, 16, 15],
-        history: [
-          { name: "S-10", score: 68, target: 75 },
-          { name: "S-11", score: 72, target: 75 },
-          { name: "S-12", score: 77, target: 76 },
-          { name: "S-13", score: 81, target: 78 },
-          { name: "S-14", score: 79, target: 80 },
-          { name: "S-15", score: 84, target: 82 },
-        ],
-        breakdown: [
-          { metric: "Velocity (SP)", actual: 35, target: 36 },
-          { metric: "Cycle Time (days)", actual: 6.1, target: 6 },
-          { metric: "Throughput (issues)", actual: 15, target: 16 },
-        ],
-      },
-      {
-        id: "previous",
-        label: "Previous sprint",
-        deliveryScores: [78, 80, 81],
-        velocity: [33, 34, 35],
-        cycleTime: [6.6, 6.3, 6.1],
-        throughput: [13, 14, 15],
-        history: [
-          { name: "S-09", score: 65, target: 74 },
-          { name: "S-10", score: 69, target: 74 },
-          { name: "S-11", score: 72, target: 75 },
-          { name: "S-12", score: 74, target: 76 },
-          { name: "S-13", score: 77, target: 78 },
-          { name: "S-14", score: 79, target: 79 },
-        ],
-        breakdown: [
-          { metric: "Velocity (SP)", actual: 34, target: 36 },
-          { metric: "Cycle Time (days)", actual: 6.3, target: 6 },
-          { metric: "Throughput (issues)", actual: 14, target: 16 },
-        ],
-      },
-    ],
-  },
-  "a-team": {
-    label: "A-Team",
-    targets: { delivery: 85, velocity: 38, cycleTime: 5.8, throughput: 17 },
-    sprints: [
-      {
-        id: "current",
-        label: "Current sprint",
-        deliveryScores: [86, 82, 88],
-        velocity: [37, 38, 39],
-        cycleTime: [5.9, 5.7, 5.8],
-        throughput: [17, 18, 16],
-        history: [
-          { name: "S-10", score: 74, target: 78 },
-          { name: "S-11", score: 79, target: 79 },
-          { name: "S-12", score: 83, target: 80 },
-          { name: "S-13", score: 85, target: 82 },
-          { name: "S-14", score: 87, target: 84 },
-          { name: "S-15", score: 86, target: 85 },
-        ],
-        breakdown: [
-          { metric: "Velocity (SP)", actual: 38, target: 38 },
-          { metric: "Cycle Time (days)", actual: 5.8, target: 5.8 },
-          { metric: "Throughput (issues)", actual: 17, target: 17 },
-        ],
-      },
-      {
-        id: "previous",
-        label: "Previous sprint",
-        deliveryScores: [80, 82, 81],
-        velocity: [35, 36, 37],
-        cycleTime: [6.1, 6, 5.9],
-        throughput: [16, 17, 16],
-        history: [
-          { name: "S-09", score: 72, target: 77 },
-          { name: "S-10", score: 74, target: 77 },
-          { name: "S-11", score: 78, target: 78 },
-          { name: "S-12", score: 80, target: 79 },
-          { name: "S-13", score: 81, target: 80 },
-          { name: "S-14", score: 83, target: 82 },
-        ],
-        breakdown: [
-          { metric: "Velocity (SP)", actual: 36, target: 38 },
-          { metric: "Cycle Time (days)", actual: 6, target: 5.8 },
-          { metric: "Throughput (issues)", actual: 16, target: 17 },
-        ],
-      },
-    ],
-  },
-  "b-team": {
-    label: "B-Team",
-    targets: { delivery: 78, velocity: 34, cycleTime: 6.5, throughput: 14 },
-    sprints: [
-      {
-        id: "current",
-        label: "Current sprint",
-        deliveryScores: [72, 76, 75],
-        velocity: [30, 32, 33],
-        cycleTime: [6.9, 6.7, 6.5],
-        throughput: [12, 13, 13],
-        history: [
-          { name: "S-10", score: 60, target: 70 },
-          { name: "S-11", score: 64, target: 71 },
-          { name: "S-12", score: 69, target: 72 },
-          { name: "S-13", score: 71, target: 74 },
-          { name: "S-14", score: 73, target: 76 },
-          { name: "S-15", score: 75, target: 78 },
-        ],
-        breakdown: [
-          { metric: "Velocity (SP)", actual: 32, target: 34 },
-          { metric: "Cycle Time (days)", actual: 6.7, target: 6.5 },
-          { metric: "Throughput (issues)", actual: 13, target: 14 },
-        ],
-      },
-      {
-        id: "previous",
-        label: "Previous sprint",
-        deliveryScores: [70, 71, 73],
-        velocity: [29, 31, 32],
-        cycleTime: [7.1, 6.9, 6.8],
-        throughput: [11, 12, 12],
-        history: [
-          { name: "S-09", score: 58, target: 69 },
-          { name: "S-10", score: 60, target: 69 },
-          { name: "S-11", score: 63, target: 70 },
-          { name: "S-12", score: 66, target: 71 },
-          { name: "S-13", score: 68, target: 72 },
-          { name: "S-14", score: 71, target: 73 },
-        ],
-        breakdown: [
-          { metric: "Velocity (SP)", actual: 31, target: 34 },
-          { metric: "Cycle Time (days)", actual: 6.9, target: 6.5 },
-          { metric: "Throughput (issues)", actual: 12, target: 14 },
-        ],
-      },
-    ],
-  },
-}
-
-const RANGE_OPTIONS = [
-  { value: "last-6", label: "Last 6 sprints" },
-  { value: "last-4", label: "Last 4 sprints" },
-  { value: "quarter", label: "Last quarter" },
-]
+// Sample scenarios removed; data now comes from Supabase.
 
 const trendVsTarget = (value, target, direction = "higher") => {
   if (target === undefined || target === null) return "neutral"
@@ -178,72 +27,117 @@ const formatValue = (value, decimals = 1) => {
   return Number(value).toFixed(decimals)
 }
 
-const pickScenario = (filters) => {
-  const scenario = SAMPLE_SCENARIOS[filters.squad] || SAMPLE_SCENARIOS.all
-  const sprint = scenario.sprints.find((s) => s.id === filters.sprint) || scenario.sprints[0]
-  return { scenario, sprint }
-}
-
 export function DeliveryKPIs() {
-  const [filters, setFilters] = useState({ squad: "all", sprint: "current", range: "last-6" })
+  const [filters, setFilters] = useState({ squad: "all", sprint: "all", range: "recent" })
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [metrics, setMetrics] = useState({
-    delivery: { value: 0, cached: false, target: 0 },
-    velocity: { value: 0, cached: false, target: 0 },
-    cycleTime: { value: 0, cached: false, target: 0 },
-    throughput: { value: 0, cached: false, target: 0 },
+    delivery: { value: 0, target: null },
+    velocity: { value: 0, target: null },
+    cycleTime: { value: 0, target: null },
+    throughput: { value: 0, target: null },
   })
   const [history, setHistory] = useState([])
   const [breakdown, setBreakdown] = useState([])
+  const [projectOptions, setProjectOptions] = useState([{ value: "all", label: "All squads" }])
+  const [sprintOptions, setSprintOptions] = useState([{ value: "all", label: "All sprints" }])
+  const [rawData, setRawData] = useState({ sprints: [], history: [] })
 
-  const squadOptions = useMemo(
-    () =>
-      Object.entries(SAMPLE_SCENARIOS).map(([key, info]) => ({
-        value: key,
-        label: info.label,
-      })),
-    [],
-  )
-
-  const sprintOptions = useMemo(() => {
-    const { scenario } = pickScenario(filters)
-    return scenario.sprints.map((sprint) => ({ value: sprint.id, label: sprint.label }))
-  }, [filters])
+  useEffect(() => {
+    const loadProjects = async () => {
+      setLoading(true)
+      setError(null)
+      try {
+        const projects = await getDeliveryProjects()
+        const options = [{ value: "all", label: "All squads" }, ...projects.map((p) => ({ value: p, label: p })) ]
+        setProjectOptions(options)
+      } catch (err) {
+        setError(err?.message || "Unable to load projects")
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadProjects()
+  }, [])
 
   useEffect(() => {
     const loadMetrics = async () => {
       setLoading(true)
       setError(null)
-      const { scenario, sprint } = pickScenario(filters)
-      const trimmedHistory =
-        filters.range === "last-4" ? sprint.history.slice(-4) : filters.range === "last-6" ? sprint.history.slice(-6) : sprint.history
-      setHistory(trimmedHistory)
-      setBreakdown(sprint.breakdown)
-
       try {
-        const [delivery, velocity, cycleTime, throughput] = await Promise.all([
-          getDeliveryScore({ fetchMetrics: () => sprint.deliveryScores }),
-          getVelocity({ fetchMetrics: () => sprint.velocity }),
-          getCycleTime({ fetchMetrics: () => sprint.cycleTime }),
-          getThroughput({ fetchMetrics: () => sprint.throughput }),
-        ])
-
+        const data = await fetchDeliveryMetrics({ project: filters.squad })
+        const sprintOpts = [
+          { value: "all", label: "All sprints" },
+          ...(data.sprints || []).map((s) => {
+            const end = s.end_date || s.updated_at
+            const label = end ? `${s.sprint_name} (${new Date(end).toLocaleDateString()})` : s.sprint_name
+            return { value: s.sprint_name, label }
+          }),
+        ]
+        setSprintOptions(sprintOpts)
+        setRawData({ sprints: data.sprints || [], history: data.history || [], cycleTime: data.cycleTime })
+        // compute overall defaults
         setMetrics({
-          delivery: { ...delivery, target: scenario.targets.delivery },
-          velocity: { ...velocity, target: scenario.targets.velocity },
-          cycleTime: { ...cycleTime, target: scenario.targets.cycleTime },
-          throughput: { ...throughput, target: scenario.targets.throughput },
+          delivery: { value: data.deliveryScore, target: null },
+          velocity: { value: data.velocity, target: null },
+          cycleTime: { value: data.cycleTime, target: null },
+          throughput: { value: data.throughput, target: null },
         })
+        setHistory(data.history || [])
+        setBreakdown([
+          { metric: "Velocity (SP)", actual: data.velocity, target: null },
+          { metric: "Cycle Time (days)", actual: data.cycleTime, target: null },
+          { metric: "Throughput (issues)", actual: data.throughput, target: null },
+        ])
       } catch (loadError) {
         setError(loadError?.message || "Unable to load delivery metrics.")
       } finally {
         setLoading(false)
       }
     }
-
     loadMetrics()
-  }, [filters])
+  }, [filters.squad])
+
+  // Derive displayed metrics based on selected sprint/range
+  useEffect(() => {
+    if (!rawData) return
+    const { sprints = [], history: allHistory = [], cycleTime } = rawData
+
+    const findSprint = sprints.find((s) => s.sprint_name === filters.sprint)
+    if (findSprint && filters.sprint !== "all") {
+      const total = Number(findSprint.metrics?.sp_total ?? 0)
+      const done = Number(findSprint.metrics?.sp_done ?? 0)
+      const issuesDone = Number(findSprint.metrics?.issues_done ?? 0)
+      const deliveryScore = total > 0 ? Math.min(100, Math.max(0, Math.round((done / total) * 100))) : 0
+
+      setMetrics({
+        delivery: { value: deliveryScore, target: null },
+        velocity: { value: done, target: null },
+        cycleTime: { value: cycleTime ?? 0, target: null },
+        throughput: { value: issuesDone, target: null },
+      })
+      setHistory([{ name: findSprint.sprint_name, score: deliveryScore, target: null }])
+      setBreakdown([
+        { metric: "Velocity (SP)", actual: done, target: null },
+        { metric: "Cycle Time (days)", actual: cycleTime ?? 0, target: null },
+        { metric: "Throughput (issues)", actual: issuesDone, target: null },
+      ])
+      return
+    }
+
+    // All sprints view
+    let trimmedHistory = allHistory
+    if (filters.range === "last-4") trimmedHistory = allHistory.slice(-4)
+    if (filters.range === "last-6") trimmedHistory = allHistory.slice(-6)
+
+    setHistory(trimmedHistory)
+    // Metrics were set during fetch (overall averages) and remain valid here.
+    setBreakdown([
+      { metric: "Velocity (SP)", actual: metrics.velocity.value, target: metrics.velocity.target },
+      { metric: "Cycle Time (days)", actual: metrics.cycleTime.value, target: metrics.cycleTime.target },
+      { metric: "Throughput (issues)", actual: metrics.throughput.value, target: metrics.throughput.target },
+    ])
+  }, [filters.sprint, filters.range, rawData, metrics.velocity.value, metrics.cycleTime.value, metrics.throughput.value])
 
   if (loading) {
     return (
@@ -275,20 +169,20 @@ export function DeliveryKPIs() {
         <div className="flex flex-wrap items-baseline gap-2">
           <h2 className="text-2xl font-bold text-slate-900">Delivery KPIs</h2>
           <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-            {filters.squad === "all" ? "All squads" : SAMPLE_SCENARIOS[filters.squad]?.label}
+            {projectOptions.find((o) => o.value === filters.squad)?.label || "All squads"}
           </span>
         </div>
         <p className="text-sm text-slate-600">
-          Delivery Success Score and component KPIs (velocity, cycle time, throughput) with historical trend and targets.
+          Delivery Success Score y componentes (velocity, cycle time, throughput) con datos reales de Supabase.
         </p>
       </header>
 
       <DeliveryKPIFilters
         filters={filters}
         onChange={setFilters}
-        squadOptions={squadOptions}
+        squadOptions={projectOptions}
         sprintOptions={sprintOptions}
-        rangeOptions={RANGE_OPTIONS}
+        rangeOptions={[{ value: "recent", label: "Recent sprints" }, { value: "last-4", label: "Last 4" }, { value: "last-6", label: "Last 6" }]}
       />
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -301,7 +195,7 @@ export function DeliveryKPIs() {
           icon={Gauge}
           tooltip="Average delivery score vs target"
         >
-          Target {metrics.delivery.target}
+          {metrics.delivery.target ? `Target ${metrics.delivery.target}` : "Sin target"}
         </KPICard>
 
         <KPICard
@@ -313,7 +207,7 @@ export function DeliveryKPIs() {
           icon={Activity}
           tooltip="Average velocity (story points)"
         >
-          Target {metrics.velocity.target} SP
+          {metrics.velocity.target ? `Target ${metrics.velocity.target} SP` : "Sin target"}
         </KPICard>
 
         <KPICard
@@ -325,7 +219,7 @@ export function DeliveryKPIs() {
           icon={Timer}
           tooltip="Average days from start to completion"
         >
-          Target {metrics.cycleTime.target} days
+          {metrics.cycleTime.target ? `Target ${metrics.cycleTime.target} days` : "Sin target"}
         </KPICard>
 
         <KPICard
@@ -337,7 +231,7 @@ export function DeliveryKPIs() {
           icon={PackageCheck}
           tooltip="Average completed issues per sprint"
         >
-          Target {metrics.throughput.target}
+          {metrics.throughput.target ? `Target ${metrics.throughput.target}` : "Sin target"}
         </KPICard>
       </div>
 
@@ -349,7 +243,7 @@ export function DeliveryKPIs() {
               <p className="text-xs text-slate-500">Trend across recent sprints with target line</p>
             </div>
           </div>
-          <DeliveryScoreChart data={history} target={SAMPLE_SCENARIOS[filters.squad]?.targets?.delivery || 80} />
+          <DeliveryScoreChart data={history} target={80} />
         </div>
 
         <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
@@ -364,10 +258,7 @@ export function DeliveryKPIs() {
       </div>
 
       <div className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-600">
-        <p>
-          Data uses mocked samples and client-side caching (5 minutes) via <code>deliveryKPIService</code>. Replace fetchers with Supabase RPCs
-          when backend is ready.
-        </p>
+        <p>Datos desde Supabase (sprint_metrics, issues_normalized). Sin mocks.</p>
       </div>
     </section>
   )

@@ -27,6 +27,8 @@ Vars (set in root `.env` or Actions secrets):
 - `SUPABASE_SYNC_STATE_TABLE` (optional) — default `sync_state`
 - `SUPABASE_SPRINTS_TABLE` (optional) — default `sprints`
 - `SYNC_MODE` (optional) — `full` to force full sync; defaults to incremental
+- `JIRA_SYNC_ENABLED` (optional) — default `false`; set `true` to enable Jira API ingestion. If `false`, the Jira steps are skipped even if credentials exist.
+- `JIRA_BASE_URL`, `JIRA_API_TOKEN`, `JIRA_BOARD_ID`, `JIRA_JQL` (optional) — only used when `JIRA_SYNC_ENABLED=true`; otherwise ignored/skipped.
 
 See `.env.example` for placeholders.
 
@@ -155,3 +157,12 @@ Workflow: `.github/workflows/sync-sheet.yml`
 - You can force a full sync with `SYNC_MODE=full`.
 - Secrets required: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`.
 - Optional secrets: `SHEET_CSV_URL`, `SUPABASE_ISSUES_TABLE`, `SUPABASE_ISSUES_NORMALIZED_TABLE`.
+
+### Run output (logging)
+- Cada corrida imprime un resumen estructurado:
+  - `mode` (incremental | full)
+  - `sheetRows` (filas del CSV mapeadas)
+  - `upsertRaw`, `upsertNormalized`, `sprintUpserts`, `scopeChanges`, `issueSprints`, `sprintMetrics`
+  - `jiraSprints`, `jiraIssues` (skipped si `JIRA_SYNC_ENABLED=false`)
+  - `syncState`
+- Útil para revisar conteos rápidamente en GitHub Actions o en consola local.

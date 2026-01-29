@@ -14,6 +14,7 @@ import { UnifiedTimeline } from "@/components/overall/UnifiedTimeline"
 import { QuickAlerts } from "@/components/overall/QuickAlerts"
 import { DeliveryKPIs } from "@/components/delivery/DeliveryKPIs"
 import { ProjectsMetrics } from "@/components/projects/ProjectsMetrics"
+import { DeveloperMetrics } from "@/components/developer/DeveloperMetrics"
 
 const NAV_ITEMS = [
   { id: MODULES.OVERALL, label: "Overall View", icon: LayoutDashboard },
@@ -38,7 +39,7 @@ const VIEW_COPY = {
   },
   developers: {
     title: "Developers",
-    description: "Per-developer KPIs and workload (coming soon).",
+    description: "Per-developer KPIs, burndown, and issues.",
   },
   capacity: {
     title: "Capacity",
@@ -142,7 +143,7 @@ export function App() {
     }
 
     if (activeView === MODULES.DEVELOPERS) {
-      return <Placeholder title="Developers" description="Per-developer KPIs and workload will be shown here." />
+      return <DeveloperMetrics />
     }
 
     if (activeView === MODULES.CAPACITY) {

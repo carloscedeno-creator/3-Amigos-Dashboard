@@ -6,16 +6,12 @@ const DEFAULT_SQUADS = [
   { value: "b-team", label: "B-Team" },
 ]
 
-const DEFAULT_SPRINTS = [
-  { value: "current", label: "Current sprint" },
-  { value: "previous", label: "Previous sprint" },
-  { value: "last-3", label: "Last 3 sprints" },
-]
+const DEFAULT_SPRINTS = [{ value: "all", label: "All sprints" }]
 
 const DEFAULT_RANGES = [
-  { value: "last-6", label: "Last 6 sprints" },
-  { value: "quarter", label: "Last quarter" },
-  { value: "year", label: "Year to date" },
+  { value: "recent", label: "Recent" },
+  { value: "last-4", label: "Last 4" },
+  { value: "last-6", label: "Last 6" },
 ]
 
 /**
@@ -70,20 +66,29 @@ export function DeliveryKPIFilters({
           </select>
         </label>
 
-        <label className="space-y-1 text-sm font-medium text-slate-700">
-          <span>Date range</span>
-          <select
-            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-200"
-            value={filters.range}
-            onChange={handleChange("range")}
-          >
-            {rangeOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </label>
+        {filters.sprint === "all" ? (
+          <label className="space-y-1 text-sm font-medium text-slate-700">
+            <span>Date range</span>
+            <select
+              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-200"
+              value={filters.range}
+              onChange={handleChange("range")}
+            >
+              {rangeOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+        ) : (
+          <div className="space-y-1 text-sm font-medium text-slate-500">
+            <span>Date range</span>
+            <div className="rounded-lg border border-dashed border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600">
+              Range not applicable when a specific sprint is selected.
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

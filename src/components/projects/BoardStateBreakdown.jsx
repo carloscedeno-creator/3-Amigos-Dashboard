@@ -29,20 +29,18 @@ const buildData = (issues = []) => {
   }))
 }
 
-const DEFAULT_DATA = buildData([
-  { status: "Done" },
-  { status: "Done" },
-  { status: "In Progress" },
-  { status: "To Do" },
-  { status: "Blocked" },
-])
-
 export function BoardStateBreakdown({ issues = [] }) {
-  const data = buildData(Array.isArray(issues) && issues.length ? issues : DEFAULT_DATA)
+  const hasIssues = Array.isArray(issues) && issues.length > 0
+  const data = buildData(hasIssues ? issues : [])
   const total = data.reduce((sum, item) => sum + item.value, 0)
 
   return (
     <div className="h-80">
+      {!hasIssues && (
+        <p className="mb-4 text-sm text-slate-500">
+          No hay issues para este sprint. Se muestran totales en 0%.
+        </p>
+      )}
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={110} paddingAngle={2} label>

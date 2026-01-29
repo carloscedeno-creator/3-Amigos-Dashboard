@@ -36,6 +36,7 @@ function aggregateCurrent(rows) {
     const sp = pickStoryPoints(row)
     const done = isDone(row)
     const status = row.status || null
+    const project = row.project_name || row.project || null
 
     for (const sprintName of sprintNames) {
       const acc = sprintMap.get(sprintName) || {
@@ -44,6 +45,7 @@ function aggregateCurrent(rows) {
         sp_total: 0,
         sp_done: 0,
         status_counts: {},
+        projects: new Set(),
       }
       acc.issues_total += 1
       acc.sp_total += sp
@@ -52,6 +54,7 @@ function aggregateCurrent(rows) {
         acc.sp_done += sp
       }
       addStatusCount(acc.status_counts, status)
+      if (project) acc.projects.add(project)
       sprintMap.set(sprintName, acc)
     }
   }
@@ -115,6 +118,7 @@ export async function computeSprintMetrics({
       sp_total: 0,
       sp_done: 0,
       status_counts: {},
+      projects: new Set(),
     }
     const rem = removedAgg.get(sprintName) || {
       removed_count: 0,
@@ -131,6 +135,7 @@ export async function computeSprintMetrics({
         removed_count: rem.removed_count,
         removed_sp: rem.removed_sp,
         status_counts: curr.status_counts,
+        projects: Array.from(curr.projects || []),
       },
       updated_at: now,
     })

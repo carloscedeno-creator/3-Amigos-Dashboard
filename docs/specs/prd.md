@@ -2844,9 +2844,19 @@ export default function KPICard({
 - **RT-OVERALL-007:** Cálculo de días restantes: `end_date - TODAY`
 - **RT-OVERALL-008:** Componente de lista con cards por sprint
 - **RT-OVERALL-009:** Badges de alerta (rojo si < 70%)
+- **RT-OVERALL-009.1:** Fuente de datos: `sprint_metrics` (progreso) + `sprints` (fechas) + `issue_sprints` → `issues_normalized` (proyectos).
+- **RT-OVERALL-009.2:** Filtrado frontend: mostrar sólo sprints con `sp_total > 0` o `sp_done > 0`, ocultar sprints con `end_date` en el pasado, y excluir sprints con más de 90 días de antigüedad (por `end_date` o `last_seen_at/updated_at` si no hay fecha).
+- **RT-OVERALL-009.3:** Datos reales obligatorios en Overall: prohibido fallback de mocks; si la consulta falla o viene vacía, mostrar estado vacío/error en UI en lugar de datos sintéticos.
+- **RT-OVERALL-009.4:** `sprints` debe almacenar fechas de inicio/fin (`start_date`, `end_date`, `complete_date`) y `state` cuando venga del sheet/Jira; `sprint_metrics.metrics.projects` debe incluir lista de proyectos (de `project`/`project_name`) para etiquetar squads/equipos.
+- **RT-OVERALL-009.5:** Filtrado adicional: requerir `end_date` presente y al menos un proyecto válido (no vacío/Unknown); descartar sprints con `state` en `closed/complete`.
 
 #### Criterios de Aceptación
 - ✅ Sprints activos se listan correctamente
+
+### Reglas de Datos Reales (aplica a Overall, Delivery, Projects)
+- Todas las métricas deben consumirse desde Supabase (sin mocks en producción). Tablas/vistas mínimas: `issues_normalized`, `issue_sprints`, `sprint_metrics`, `sprint_scope_changes`, `sprints`, vistas de métricas de proyecto/velocidad/throughput si existen.
+- Si una fuente falla o viene vacía, la UI debe mostrar estado vacío/error controlado, nunca datos sintéticos.
+- Filtrado temporal para sprints: excluir `end_date` en el pasado y registros con más de 90 días de antigüedad (por `end_date` o `last_seen_at/updated_at`).
 - ✅ Progreso se calcula y muestra correctamente
 - ✅ Días restantes se calculan correctamente
 - ✅ Alertas visuales aparecen para sprints en riesgo
@@ -3003,6 +3013,9 @@ export default function KPICard({
 - **RF-PROJECTS-004:** Gráfico de Board State breakdown (pie chart)
 - **RF-PROJECTS-005:** Tabla de issues con detalles
 - **RF-PROJECTS-006:** Exportación a PDF
+- **RF-PROJECTS-019:** Selecciona por defecto el primer squad y el primer sprint disponibles; si no hay datos muestra mensaje “No squads/sprints disponibles” sin romper la página.
+- **RF-PROJECTS-020:** Estados de “sin datos” para métricas, issues y scope changes (placeholders en lugar de celdas vacías).
+- **RF-PROJECTS-021:** Estado de carga visible y estado de error con mensaje recuperable (no bloquea el resto del dashboard).
 
 #### Requerimientos Técnicos
 - **RT-PROJECTS-001:** Componente `ProjectsMetrics.jsx`
@@ -3016,6 +3029,9 @@ export default function KPICard({
 - **RT-PROJECTS-004:** Query a `issue_sprints` con filtro por sprint
 - **RT-PROJECTS-005:** Uso de `statusHelper.js` para determinar estados Done
 - **RT-PROJECTS-006:** Componente de tabla con paginación (opcional)
+- **RT-PROJECTS-016:** Cache en cliente con TTL (≥5 min) para squads, sprints y métricas; invalida con `forceRefresh`.
+- **RT-PROJECTS-017:** Fallback seguro cuando la vista retorna vacío (usa sprint “latest” sin romper KPIs).
+- **RT-PROJECTS-018:** Export a PDF incluye meta (squad, sprint, fecha) y excluye controles con `data-export-ignore`; usa `pdfGenerator.js` (jsPDF + html2canvas) y escala para legibilidad.
 
 #### Criterios de Aceptación
 - ✅ Selectores funcionan correctamente
@@ -3024,6 +3040,9 @@ export default function KPICard({
 - ✅ Tabla de issues muestra datos correctos
 - ✅ Scope Changes se muestran si existen
 - ✅ PDF se genera correctamente
+- ✅ Si no hay squads o sprints, se muestra estado vacío y no se rompe la UI
+- ✅ Errores de carga se muestran con mensaje amigable y permiten reintentar
+- ✅ PDF refleja los filtros seleccionados y no incluye controles/acciones
 
 ### 6.2 Board State Breakdown
 
